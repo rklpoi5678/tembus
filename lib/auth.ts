@@ -218,12 +218,12 @@ export async function createPasswordResetToken(email: string): Promise<AuthResul
     expiresAt.setHours(expiresAt.getHours() + 1) // 1시간 후 만료
 
     await sql`
-      UPDATE public.user_auth 
+      UPDATE public.user_auth
       SET reset_token = ${resetToken}, reset_token_expires = ${expiresAt.toISOString()}
       WHERE user_id = ${userId}
     `
 
-    return { success: true, message: "비밀번호 재설정 링크가 이메일로 전송되었습니다." }
+    return { success: true, message: "비밀번호 재설정 링크가 이메일로 전송되었습니다.", token: resetToken }
   } catch (error) {
     console.error("Password reset token creation error:", error)
     return { success: false, message: "비밀번호 재설정 요청 중 오류가 발생했습니다." }
