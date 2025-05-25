@@ -303,22 +303,22 @@ export default function Component() {
               <h3 className="font-semibold mb-4">카테고리</h3>
               <ul className="space-y-2 text-muted-foreground">
                 <li>
-                  <Link href="#" className="hover:text-primary">
+                  <Link href="/catagories/games" className="hover:text-primary">
                     게임 아이템
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-primary">
+                  <Link href="/catagories/software" className="hover:text-primary">
                     소프트웨어
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-primary">
+                  <Link href="/catagories/music" className="hover:text-primary">
                     디지털 음원
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-primary">
+                  <Link href="/catagories/mobile-apps" className="hover:text-primary">
                     모바일 앱
                   </Link>
                 </li>
@@ -328,22 +328,22 @@ export default function Component() {
               <h3 className="font-semibold mb-4">고객지원</h3>
               <ul className="space-y-2 text-muted-foreground">
                 <li>
-                  <Link href="#" className="hover:text-primary">
+                  <Link href="/support/faq" className="hover:text-primary">
                     FAQ
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-primary">
+                  <Link href="/support/contact" className="hover:text-primary">
                     고객센터
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-primary">
+                  <Link href="/support/refund-policy" className="hover:text-primary">
                     환불정책
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-primary">
+                  <Link href="/support/terms" className="hover:text-primary">
                     이용약관
                   </Link>
                 </li>
@@ -353,22 +353,22 @@ export default function Component() {
               <h3 className="font-semibold mb-4">회사정보</h3>
               <ul className="space-y-2 text-muted-foreground">
                 <li>
-                  <Link href="#" className="hover:text-primary">
+                  <Link href="/company/about" className="hover:text-primary">
                     회사소개
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-primary">
+                  <Link href="/company/careers" className="hover:text-primary">
                     채용정보
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-primary">
+                  <Link href="/company/partnership" className="hover:text-primary">
                     파트너십
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-primary">
+                  <Link href="/company/privacy-policy" className="hover:text-primary">
                     개인정보처리방침
                   </Link>
                 </li>
