@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { motion } from "framer-motion"
 
 export default function PartnershipPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -92,17 +91,13 @@ export default function PartnershipPage() {
     <div className="container mx-auto px-4 py-8">
       {/* 헤더 섹션 */}
       <div className="text-center mb-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+        <div className="animate-fade-in-up">
           <h1 className="text-4xl font-bold mb-4">파트너십 프로그램</h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             디지털마켓과 함께 성장하는 파트너가 되어보세요.
             우리는 파트너의 성공을 위해 최선을 다합니다.
           </p>
-        </motion.div>
+        </div>
       </div>
 
       {/* 혜택 섹션 */}
@@ -110,11 +105,10 @@ export default function PartnershipPage() {
         <h2 className="text-3xl font-bold text-center mb-8">파트너십 혜택</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {benefits.map((benefit, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="animate-fade-in-up"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               <Card className="h-full hover:shadow-lg transition-shadow">
                 <CardHeader>
@@ -135,7 +129,7 @@ export default function PartnershipPage() {
                   </ul>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -145,11 +139,10 @@ export default function PartnershipPage() {
         <h2 className="text-3xl font-bold text-center mb-8">파트너십 유형</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {partnershipTypes.map((type, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="animate-fade-in-up"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               <Card className="h-full">
                 <CardHeader>
@@ -168,14 +161,14 @@ export default function PartnershipPage() {
                   </ul>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
 
       {/* 신청 섹션 */}
       <div className="max-w-2xl mx-auto">
-        <Card>
+        <Card className="animate-fade-in-up-delay">
           <CardHeader>
             <CardTitle className="text-center">파트너십 신청</CardTitle>
             <CardDescription className="text-center">

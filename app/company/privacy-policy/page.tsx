@@ -1,8 +1,7 @@
 "use client"
 
 import { Shield, Cookie, User, Database, Mail, Phone } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { motion } from "framer-motion"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function PrivacyPolicyPage() {
   const sections = [
@@ -59,39 +58,28 @@ export default function PrivacyPolicyPage() {
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-12">
         {/* 헤더 섹션 */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16 animate-fade-in">
           <h1 className="text-4xl font-bold mb-6 text-gray-900">개인정보 처리방침</h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
             디지털마켓은 사용자의 개인정보 보호를 최우선으로 생각합니다.
             본 정책은 우리가 수집하는 정보와 그 사용 방법에 대해 설명합니다.
           </p>
-        </motion.div>
+        </div>
 
         {/* 마지막 업데이트 */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-center mb-12"
-        >
+        <div className="text-center mb-12 animate-fade-in-delay">
           <p className="text-sm text-gray-500">
             마지막 업데이트: 2024년 1월 15일
           </p>
-        </motion.div>
+        </div>
 
         {/* 정책 섹션 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {sections.map((section, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="animate-fade-in-up"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               <Card className="h-full hover:shadow-lg transition-shadow duration-300">
                 <CardHeader>
@@ -106,17 +94,12 @@ export default function PrivacyPolicyPage() {
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* 문의 섹션 */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-20 text-center max-w-2xl mx-auto"
-        >
+        <div className="mt-20 text-center max-w-2xl mx-auto animate-fade-in-up-delay">
           <h2 className="text-2xl font-bold mb-6 text-gray-900">문의하기</h2>
           <p className="text-gray-600 mb-8">
             개인정보 처리방침에 대한 문의사항이 있으시면 아래 연락처로 문의해 주세요.
@@ -131,7 +114,7 @@ export default function PrivacyPolicyPage() {
               <span className="text-gray-700">02-1234-5678</span>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   )
