@@ -90,10 +90,10 @@ export default function Component() {
               <span className="font-bold text-xl">디지털마켓</span>
             </Link>
             <nav className="hidden md:flex items-center gap-6">
-              <Link href="#" className="text-sm font-medium hover:text-primary">
-                홈
+              <Link href="/discover" className="text-sm font-medium hover:text-primary">
+                Discover
               </Link>
-              <Link href="#" className="text-sm font-medium hover:text-primary">
+              <Link href="/categories" className="text-sm font-medium hover:text-primary">
                 카테고리
               </Link>
               <Link href="#" className="text-sm font-medium hover:text-primary">
@@ -136,15 +136,16 @@ export default function Component() {
               게임 아이템부터 프리미엄 소프트웨어까지, 안전하고 빠른 디지털 상품 거래
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-white text-purple-600 hover:bg-gray-100">
-                지금 쇼핑하기
+              <Button size="lg" className="bg-white text-purple-600 hover:bg-gray-100" asChild>
+                <Link href="/discover">지금 쇼핑하기</Link>
               </Button>
               <Button
                 size="lg"
                 variant="outline"
                 className="border-white text-white hover:bg-white hover:text-purple-600"
+                asChild
               >
-                카테고리 보기
+                <Link href="/categories">카테고리 보기</Link>
               </Button>
             </div>
           </div>
@@ -303,22 +304,22 @@ export default function Component() {
               <h3 className="font-semibold mb-4">카테고리</h3>
               <ul className="space-y-2 text-muted-foreground">
                 <li>
-                  <Link href="/catagories/games" className="hover:text-primary">
+                  <Link href="/categories/games" className="hover:text-primary">
                     게임 아이템
                   </Link>
                 </li>
                 <li>
-                  <Link href="/catagories/software" className="hover:text-primary">
+                  <Link href="/categories/software" className="hover:text-primary">
                     소프트웨어
                   </Link>
                 </li>
                 <li>
-                  <Link href="/catagories/music" className="hover:text-primary">
+                  <Link href="/categories/music" className="hover:text-primary">
                     디지털 음원
                   </Link>
                 </li>
                 <li>
-                  <Link href="/catagories/mobile-apps" className="hover:text-primary">
+                  <Link href="/categories/mobile-apps" className="hover:text-primary">
                     모바일 앱
                   </Link>
                 </li>
@@ -368,7 +369,7 @@ export default function Component() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/company/privacy-policy" className="hover:text-primary">
+                  <Link href="/company/privacy" className="hover:text-primary">
                     개인정보처리방침
                   </Link>
                 </li>

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { ShoppingCart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import Link from "next/link"
+import { CartSidebar } from "@/components/cart/cart-sidebar"
 
 export function CartIcon() {
   const [cartCount, setCartCount] = useState(0)
@@ -25,7 +25,7 @@ export function CartIcon() {
 
     fetchCartCount()
 
-    // 장바구니 업데이트 이벤트 리스너
+    // Listen for cart updates
     const handleCartUpdate = () => {
       fetchCartCount()
     }
@@ -35,8 +35,8 @@ export function CartIcon() {
   }, [])
 
   return (
-    <Button variant="ghost" size="icon" asChild className="relative">
-      <Link href="/cart">
+    <CartSidebar>
+      <Button variant="ghost" size="icon" className="relative">
         <ShoppingCart className="h-5 w-5" />
         {cartCount > 0 && (
           <Badge
@@ -46,7 +46,7 @@ export function CartIcon() {
             {cartCount > 99 ? "99+" : cartCount}
           </Badge>
         )}
-      </Link>
-    </Button>
+      </Button>
+    </CartSidebar>
   )
 }
