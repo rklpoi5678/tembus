@@ -36,8 +36,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const response = await fetch("/api/auth/me")
       if (response.ok) {
-        const userData = await response.json()
-        setUser(userData.user)
+        const data = await response.json()
+        if (data.success) {
+          setUser(data.user)
+        }
       }
     } catch (error) {
       console.error("Auth check failed:", error)
@@ -58,11 +60,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (data.success) {
         setUser(data.user)
+        await checkAuth()
       }
 
       return data
     } catch (error) {
-      return { success: false, message: "Login failed" }
+      return { success: false, message: "로그인에 실패했습니다." }
     }
   }
 
@@ -78,11 +81,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (data.success) {
         setUser(data.user)
+        await checkAuth()
       }
 
       return data
     } catch (error) {
-      return { success: false, message: "Registration failed" }
+      return { success: false, message: "회원가입에 실패했습니다." }
     }
   }
 
@@ -107,11 +111,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (result.success) {
         setUser(result.user)
+        await checkAuth()
       }
 
       return result
     } catch (error) {
-      return { success: false, message: "Update failed" }
+      return { success: false, message: "프로필 업데이트에 실패했습니다." }
     }
   }
 
