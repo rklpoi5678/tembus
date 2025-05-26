@@ -16,121 +16,121 @@ import { useToast } from "@/hooks/use-toast"
 
 interface PlatformSettings {
   general: {
-    siteName: string
-    siteDescription: string
-    siteUrl: string
-    contactEmail: string
-    supportEmail: string
-    logo: string
-    favicon: string
-    timezone: string
-    language: string
+    siteName: string // 사이트 이름
+    siteDescription: string // 사이트 설명
+    siteUrl: string // 사이트 URL
+    contactEmail: string // 연락 이메일
+    supportEmail: string // 고객지원 이메일
+    logo: string // 로고 URL
+    favicon: string // 파비콘 URL
+    timezone: string // 시간대
+    language: string // 기본 언어
   }
   payments: {
-    stripePublishableKey: string
-    stripeSecretKey: string
-    paypalClientId: string
-    paypalClientSecret: string
-    commissionRate: number
-    minimumPayout: number
-    payoutSchedule: string
-    taxCalculation: boolean
+    stripePublishableKey: string // 스트라이프 공개 키
+    stripeSecretKey: string // 스트라이프 비밀 키
+    paypalClientId: string // 페이팔 클라이언트 ID
+    paypalClientSecret: string // 페이팔 클라이언트 시크릿
+    commissionRate: number // 수수료율
+    minimumPayout: number // 최소 지급액
+    payoutSchedule: string // 지급 주기
+    taxCalculation: boolean // 세금 계산 활성화
   }
   email: {
-    smtpHost: string
-    smtpPort: string
-    smtpUsername: string
-    smtpPassword: string
-    fromEmail: string
-    fromName: string
-    emailVerificationRequired: boolean
-    welcomeEmailEnabled: boolean
+    smtpHost: string // 이메일 호스트
+    smtpPort: string // 이메일 포트
+    smtpUsername: string // 이메일 사용자 이름
+    smtpPassword: string // 이메일 비밀번호
+    fromEmail: string // 발신 이메일
+    fromName: string // 발신자 이름
+    emailVerificationRequired: boolean // 이메일 인증 필요
+    welcomeEmailEnabled: boolean // 환영 이메일 활성화
   }
   security: {
-    twoFactorRequired: boolean
-    passwordMinLength: number
-    sessionTimeout: number
-    maxLoginAttempts: number
-    ipWhitelist: string
-    sslRequired: boolean
-    corsOrigins: string
+    twoFactorRequired: boolean // 2단계 인증 필요
+    passwordMinLength: number // 비밀번호 최소 길이
+    sessionTimeout: number // 세션 타임아웃
+    maxLoginAttempts: number // 최대 로그인 시도 횟수
+    ipWhitelist: string // IP 화이트리스트
+    sslRequired: boolean // SSL 필요
+    corsOrigins: string // CORS 허용 도메인
   }
   notifications: {
-    newUserNotifications: boolean
-    newOrderNotifications: boolean
-    payoutNotifications: boolean
-    systemMaintenanceNotifications: boolean
-    emailNotifications: boolean
-    pushNotifications: boolean
+    newUserNotifications: boolean // 신규 회원 알림 (관리자만 받도록 설정)
+    newOrderNotifications: boolean // 신규 주문 알림
+    payoutNotifications: boolean // 지급 알림
+    systemMaintenanceNotifications: boolean // 시스템 유지 관리 알림
+    emailNotifications: boolean // 이메일 알림
+    pushNotifications: boolean // 푸시 알림
   }
   appearance: {
-    primaryColor: string
-    secondaryColor: string
-    accentColor: string
-    darkMode: boolean
-    customCSS: string
-    headerScript: string
-    footerScript: string
+    primaryColor: string // 기본 색상
+    secondaryColor: string // 보조 색상
+    accentColor: string // 강조 색상
+    darkMode: boolean // 다크 모드 활성화
+    customCSS: string // 사용자 정의 CSS
+    headerScript: string // 헤더 스크립트
+    footerScript: string // 푸터 스크립트
   }
 }
 
 const defaultSettings: PlatformSettings = {
   general: {
-    siteName: "디지털 마켓플레이스",
-    siteDescription: "디지털 제품을 사고 팔기 위한 최고의 장소",
-    siteUrl: "https://marketplace.com",
-    contactEmail: "contact@marketplace.com",
-    supportEmail: "support@marketplace.com",
-    logo: "/logo.png",
-    favicon: "/favicon.ico",
-    timezone: "UTC",
-    language: "ko",
+    siteName: "템버스", // 사이트 이름
+    siteDescription: "템버스", // 사이트 설명
+    siteUrl: "https://tembus.com", // 사이트 URL
+    contactEmail: "contact@tembus.com", // 연락 이메일
+    supportEmail: "support@tembus.com", // 고객지원 이메일
+    logo: "/logo.png", // 로고 URL
+    favicon: "/favicon.ico", // 파비콘 URL
+    timezone: "UTC", // 시간대
+    language: "ko", // 기본 언어
   },
   payments: {
-    stripePublishableKey: "",
-    stripeSecretKey: "",
-    paypalClientId: "",
-    paypalClientSecret: "",
-    commissionRate: 5,
-    minimumPayout: 50,
-    payoutSchedule: "weekly",
-    taxCalculation: true,
+    stripePublishableKey: "", // 스트라이프 공개 키
+    stripeSecretKey: "", // 스트라이프 비밀 키
+    paypalClientId: "", // 페이팔 클라이언트 ID
+    paypalClientSecret: "", // 페이팔 클라이언트 시크릿
+    commissionRate: 5, // 수수료율
+    minimumPayout: 50, // 최소 지급액
+    payoutSchedule: "weekly", // 지급 주기
+    taxCalculation: true, // 세금 계산 활성화
   },
   email: {
-    smtpHost: "smtp.gmail.com",
-    smtpPort: "587",
-    smtpUsername: "",
-    smtpPassword: "",
-    fromEmail: "noreply@marketplace.com",
-    fromName: "디지털 마켓플레이스",
-    emailVerificationRequired: true,
-    welcomeEmailEnabled: true,
+    smtpHost: process.env.SMTP_HOST || "", // 이메일 호스트
+    smtpPort: process.env.SMTP_PORT || "587", // 이메일 포트
+    smtpUsername: process.env.SMTP_USERNAME || "", // 이메일 사용자 이름
+    smtpPassword: process.env.SMTP_PASSWORD || "", // 이메일 비밀번호
+    fromEmail: process.env.FROM_EMAIL || "noreply@marketplace.com", // 발신 이메일
+    fromName: process.env.FROM_NAME || "디지털 마켓플레이스", // 발신자 이름
+    emailVerificationRequired: true, // 이메일 인증 필요
+    welcomeEmailEnabled: true, // 환영 이메일 활성화
   },
   security: {
-    twoFactorRequired: false,
-    passwordMinLength: 8,
-    sessionTimeout: 24,
-    maxLoginAttempts: 5,
-    ipWhitelist: "",
-    sslRequired: true,
-    corsOrigins: "*",
+    twoFactorRequired: false, // 2단계 인증 필요
+    passwordMinLength: 8, // 비밀번호 최소 길이
+    sessionTimeout: 24, // 세션 타임아웃
+    maxLoginAttempts: 5, // 최대 로그인 시도 횟수
+    ipWhitelist: "", // IP 화이트리스트
+    sslRequired: true, // SSL 필요
+    corsOrigins: "*", // CORS 허용 도메인
   },
   notifications: {
-    newUserNotifications: true,
-    newOrderNotifications: true,
-    payoutNotifications: true,
-    systemMaintenanceNotifications: true,
-    emailNotifications: true,
-    pushNotifications: false,
+    newUserNotifications: false, // 신규 회원 알림 (관리자만 받도록 설정)
+    newOrderNotifications: false, // 신규 주문 알림
+    payoutNotifications: false, // 지급 알림
+    systemMaintenanceNotifications: false, // 시스템 유지 관리 알림
+    emailNotifications: false, // 이메일 알림
+    pushNotifications: false, // 푸시 알림
   },
   appearance: {
-    primaryColor: "#3b82f6",
-    secondaryColor: "#64748b",
-    accentColor: "#f59e0b",
-    darkMode: false,
-    customCSS: "",
-    headerScript: "",
-    footerScript: "",
+    primaryColor: "#3b82f6", // 기본 색상
+    secondaryColor: "#64748b", // 보조 색상
+    accentColor: "#f59e0b", // 강조 색상
+    darkMode: false, // 다크 모드 활성화
+    customCSS: "", // 사용자 정의 CSS
+    headerScript: "", // 헤더 스크립트
+    footerScript: "", // 푸터 스크립트
   },
 }
 
