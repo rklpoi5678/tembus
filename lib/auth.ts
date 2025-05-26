@@ -9,6 +9,7 @@ export interface User {
   id: string
   email: string
   name: string
+  role: "admin" | "seller" | "customer"
   emailVerified: boolean
   createdAt: string
 }
@@ -40,7 +41,7 @@ export function generateResetToken(): string {
 }
 
 // 사용자 생성
-export async function createUser(email: string, password: string, name: string): Promise<AuthResult> {
+export async function createUser(email: string, password: string, name: string, role: "admin" | "seller" | "customer" = "customer"): Promise<AuthResult> {
   try {
     // 이메일 중복 확인
     const existingUser = await sql`
@@ -56,8 +57,8 @@ export async function createUser(email: string, password: string, name: string):
     const hashedPassword = await hashPassword(password)
 
     await sql`
-      INSERT INTO public.users (id, email, name, created_at, updated_at)
-      VALUES (${userId}, ${email}, ${name}, NOW(), NOW())
+      INSERT INTO public.users (id, email, name, role, created_at, updated_at)
+      VALUES (${userId}, ${email}, ${name}, ${role}, NOW(), NOW())
     `
 
     await sql`
@@ -69,6 +70,7 @@ export async function createUser(email: string, password: string, name: string):
       id: userId,
       email,
       name,
+      role,
       emailVerified: false,
       createdAt: new Date().toISOString(),
     }
@@ -84,7 +86,7 @@ export async function createUser(email: string, password: string, name: string):
 export async function authenticateUser(email: string, password: string): Promise<AuthResult> {
   try {
     const result = await sql`
-      SELECT u.id, u.email, u.name, ua.password_hash, ua.email_verified
+      SELECT u.id, u.email, u.name, u.role, ua.password_hash, ua.email_verified
       FROM public.users u
       JOIN public.user_auth ua ON u.id = ua.user_id
       WHERE u.email = ${email} AND u.deleted_at IS NULL
@@ -110,6 +112,7 @@ export async function authenticateUser(email: string, password: string): Promise
       id: userData.id,
       email: userData.email,
       name: userData.name,
+      role: userData.role,
       emailVerified: userData.email_verified,
       createdAt: userData.created_at,
     }
@@ -160,7 +163,7 @@ export async function getCurrentUser(): Promise<User | null> {
     }
 
     const result = await sql`
-      SELECT u.id, u.email, u.name, ua.email_verified, u.created_at
+      SELECT u.id, u.email, u.name, u.role, ua.email_verified, u.created_at
       FROM public.user_sessions s
       JOIN public.users u ON s.user_id = u.id
       JOIN public.user_auth ua ON u.id = ua.user_id
@@ -178,6 +181,7 @@ export async function getCurrentUser(): Promise<User | null> {
       id: userData.id,
       email: userData.email,
       name: userData.name,
+      role: userData.role,
       emailVerified: userData.email_verified,
       createdAt: userData.created_at,
     }

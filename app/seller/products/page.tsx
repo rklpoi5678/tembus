@@ -71,20 +71,20 @@ export default function SellerProducts() {
       <SellerLayout>
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-white">Products</h1>
-            <Button className="bg-pink-500 hover:bg-pink-600">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">상품</h1>
+            <Button className="bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white">
               <Plus className="mr-2 h-4 w-4" />
-              Create Product
+              상품 생성
             </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <Card key={i} className="bg-gray-800 border-gray-700">
+              <Card key={i} className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                 <CardContent className="p-6">
                   <div className="animate-pulse">
-                    <div className="h-32 bg-gray-700 rounded mb-4"></div>
-                    <div className="h-4 bg-gray-700 rounded w-3/4 mb-2"></div>
-                    <div className="h-4 bg-gray-700 rounded w-1/2"></div>
+                    <div className="h-48 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
                   </div>
                 </CardContent>
               </Card>
@@ -101,13 +101,13 @@ export default function SellerProducts() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-white">Products</h1>
-            <p className="text-gray-400">Manage your product catalog</p>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">상품</h1>
+            <p className="text-gray-600 dark:text-gray-400">상품 카탈로그를 관리하세요</p>
           </div>
-          <Button asChild className="bg-pink-500 hover:bg-pink-600">
+          <Button asChild className="bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white">
             <Link href="/seller/products/new">
               <Plus className="mr-2 h-4 w-4" />
-              Create Product
+              상품 생성
             </Link>
           </Button>
         </div>
@@ -115,31 +115,31 @@ export default function SellerProducts() {
         {/* Search and Filters */}
         <div className="flex items-center gap-4">
           <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
             <Input
-              placeholder="Search products..."
+              placeholder="상품 검색..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+              className="pl-10 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white placeholder-gray-500"
             />
           </div>
-          <Button variant="outline" className="border-gray-700 text-gray-300 hover:text-white">
+          <Button variant="outline" className="border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
             <Filter className="mr-2 h-4 w-4" />
-            Filter
+            필터
           </Button>
         </div>
 
         {/* Products Grid */}
         {filteredProducts.length === 0 ? (
-          <Card className="bg-gray-800 border-gray-700">
+          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
             <CardContent className="p-12 text-center">
-              <Package className="h-16 w-16 text-gray-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">No products yet</h3>
-              <p className="text-gray-400 mb-6">Create your first product to start selling</p>
-              <Button asChild className="bg-pink-500 hover:bg-pink-600">
+              <Package className="h-16 w-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">아직 상품이 없습니다</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">첫 번째 상품을 만들어 판매를 시작하세요</p>
+              <Button asChild className="bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white">
                 <Link href="/seller/products/new">
                   <Plus className="mr-2 h-4 w-4" />
-                  Create Your First Product
+                  첫 번째 상품 만들기
                 </Link>
               </Button>
             </CardContent>
@@ -147,7 +147,7 @@ export default function SellerProducts() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProducts.map((product) => (
-              <Card key={product.id} className="bg-gray-800 border-gray-700 hover:bg-gray-750 transition-colors group">
+              <Card key={product.id} className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-200 group">
                 <CardContent className="p-0">
                   <div className="relative">
                     <Image
@@ -163,34 +163,34 @@ export default function SellerProducts() {
                     <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="secondary" size="icon" className="h-8 w-8">
+                          <Button variant="secondary" size="icon" className="h-8 w-8 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm">
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className="bg-gray-800 border-gray-700">
-                          <DropdownMenuItem asChild className="text-gray-300 hover:text-white">
+                        <DropdownMenuContent className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+                          <DropdownMenuItem asChild className="text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
                             <Link href={`/seller/products/${product.id}/edit`}>
                               <Edit className="mr-2 h-4 w-4" />
-                              Edit
+                              편집
                             </Link>
                           </DropdownMenuItem>
-                          <DropdownMenuItem asChild className="text-gray-300 hover:text-white">
+                          <DropdownMenuItem asChild className="text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
                             <Link href={`/products/${product.id}`}>
                               <Eye className="mr-2 h-4 w-4" />
-                              View
+                              보기
                             </Link>
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="text-gray-300 hover:text-white">
+                          <DropdownMenuItem className="text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
                             <Copy className="mr-2 h-4 w-4" />
-                            Duplicate
+                            복제
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="text-gray-300 hover:text-white">
+                          <DropdownMenuItem className="text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
                             <ExternalLink className="mr-2 h-4 w-4" />
-                            Share
+                            공유
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="text-red-400 hover:text-red-300">
+                          <DropdownMenuItem className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20">
                             <Trash2 className="mr-2 h-4 w-4" />
-                            Delete
+                            삭제
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
@@ -198,22 +198,22 @@ export default function SellerProducts() {
                   </div>
 
                   <div className="p-4">
-                    <h3 className="font-semibold text-white mb-1 truncate">{product.name}</h3>
-                    <p className="text-gray-400 text-sm mb-3 line-clamp-2">{product.shortDescription}</p>
+                    <h3 className="font-semibold text-gray-900 dark:text-white mb-1 truncate">{product.name}</h3>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-2">{product.shortDescription}</p>
 
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-2xl font-bold text-white">${product.price}</p>
-                        <Badge variant="secondary" className="bg-gray-700 text-gray-300">
+                        <p className="text-2xl font-bold text-gray-900 dark:text-white">${product.price}</p>
+                        <Badge variant="secondary" className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                           {product.category}
                         </Badge>
                       </div>
                       <div className="text-right">
-                        <div className="flex items-center gap-1 text-green-400 text-sm">
+                        <div className="flex items-center gap-1 text-green-600 dark:text-green-400 text-sm">
                           <TrendingUp className="h-4 w-4" />
-                          {product.salesCount} sales
+                          {product.salesCount} 판매
                         </div>
-                        <p className="text-gray-400 text-sm">{product.inventory} in stock</p>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm">{product.inventory} 재고</p>
                       </div>
                     </div>
                   </div>
@@ -225,37 +225,37 @@ export default function SellerProducts() {
 
         {/* Stats Summary */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-8">
-          <Card className="bg-gray-800 border-gray-700">
-            <CardContent className="p-4">
+          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-200">
+            <CardContent className="p-6">
               <div className="text-center">
-                <p className="text-2xl font-bold text-white">{products.length}</p>
-                <p className="text-gray-400 text-sm">Total Products</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">{products.length}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">전체 상품</p>
               </div>
             </CardContent>
           </Card>
-          <Card className="bg-gray-800 border-gray-700">
-            <CardContent className="p-4">
+          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-200">
+            <CardContent className="p-6">
               <div className="text-center">
-                <p className="text-2xl font-bold text-white">{products.filter((p) => p.status === "active").length}</p>
-                <p className="text-gray-400 text-sm">Active Products</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">{products.filter((p) => p.status === "active").length}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">활성 상품</p>
               </div>
             </CardContent>
           </Card>
-          <Card className="bg-gray-800 border-gray-700">
-            <CardContent className="p-4">
+          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-200">
+            <CardContent className="p-6">
               <div className="text-center">
-                <p className="text-2xl font-bold text-white">{products.reduce((sum, p) => sum + p.salesCount, 0)}</p>
-                <p className="text-gray-400 text-sm">Total Sales</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">{products.reduce((sum, p) => sum + p.salesCount, 0)}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">총 판매량</p>
               </div>
             </CardContent>
           </Card>
-          <Card className="bg-gray-800 border-gray-700">
-            <CardContent className="p-4">
+          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-200">
+            <CardContent className="p-6">
               <div className="text-center">
-                <p className="text-2xl font-bold text-white">
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">
                   ${products.reduce((sum, p) => sum + p.price * p.salesCount, 0).toLocaleString()}
                 </p>
-                <p className="text-gray-400 text-sm">Total Revenue</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">총 수익</p>
               </div>
             </CardContent>
           </Card>

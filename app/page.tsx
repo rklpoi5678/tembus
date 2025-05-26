@@ -46,6 +46,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useAuth } from "@/lib/auth-context"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
 
 interface Product {
   id: number
@@ -72,8 +74,8 @@ interface Product {
 }
 
 const sampleProducts: Product[] = [
-  {
-    id: 1,
+    {
+      id: 1,
     title: "Premium UI Kit for Mobile Apps",
     description: "Complete design system with 200+ components, dark/light themes, and Figma source files",
     price: 49,
@@ -94,9 +96,9 @@ const sampleProducts: Product[] = [
     trending: true,
     new: false,
     createdAt: "2024-01-15",
-  },
-  {
-    id: 2,
+    },
+    {
+      id: 2,
     title: "React Component Library",
     description: "Production-ready React components with TypeScript, Storybook, and comprehensive documentation",
     price: 89,
@@ -116,9 +118,9 @@ const sampleProducts: Product[] = [
     trending: true,
     new: true,
     createdAt: "2024-01-20",
-  },
-  {
-    id: 3,
+    },
+    {
+      id: 3,
     title: "Digital Marketing Course Bundle",
     description: "Complete guide to digital marketing with 50+ video lessons, templates, and case studies",
     price: 129,
@@ -126,7 +128,7 @@ const sampleProducts: Product[] = [
     image: "/placeholder.svg?height=300&width=400",
     category: "Education",
     tags: ["Marketing", "Course", "Business", "Strategy"],
-    rating: 4.7,
+      rating: 4.7,
     reviews: 89,
     downloads: 567,
     creator: {
@@ -139,16 +141,16 @@ const sampleProducts: Product[] = [
     trending: false,
     new: false,
     createdAt: "2024-01-10",
-  },
-  {
-    id: 4,
+    },
+    {
+      id: 4,
     title: "Minimalist Logo Collection",
     description: "100 premium minimalist logos in vector format, perfect for startups and modern brands",
     price: 35,
     image: "/placeholder.svg?height=300&width=400",
     category: "Design",
     tags: ["Logo", "Branding", "Vector", "Minimalist"],
-    rating: 4.6,
+      rating: 4.6,
     reviews: 312,
     downloads: 2100,
     creator: {
@@ -394,96 +396,7 @@ export default function Component() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-6 ml-16">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <Zap className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <span className="font-bold text-xl">자유템</span>
-            </Link>
-            <nav className="hidden md:flex items-center gap-6">
-              <Link href="/categories" className="text-sm font-medium hover:text-primary">
-                카테고리
-              </Link>
-              <Link href="#" className="text-sm font-medium hover:text-primary">
-                베스트
-              </Link>
-              <Link href="#" className="text-sm font-medium hover:text-primary">
-                이벤트
-              </Link>
-            </nav>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center gap-2">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input placeholder="상품을 검색하세요..." className="pl-10 w-64" />
-              </div>
-            </div>
-            <CartIcon />
-            {!loading && (
-              <>
-                {user ? (
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <User className="h-5 w-5" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      {user.role === "seller" && (
-                        <>
-                          <DropdownMenuItem asChild>
-                            <Link href="/dashboard">
-                              <Store className="mr-2 h-4 w-4" />
-                              내 상점
-                            </Link>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem asChild>
-                            <Link href="/dashboard/products">
-                              <Package className="mr-2 h-4 w-4" />
-                              상품 관리
-                            </Link>
-                          </DropdownMenuItem>
-                        </>
-                      )}
-                      <DropdownMenuItem asChild>
-                        <Link href="/settings">
-                          <Settings className="mr-2 h-4 w-4" />
-                          설정
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={logout}>
-                        <LogOut className="mr-2 h-4 w-4" />
-                        로그아웃
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                ) : (
-                  <div className="flex items-center gap-2">
-                    <Button variant="ghost" asChild>
-                      <Link href="/login">로그인</Link>
-                    </Button>
-                    <Button asChild>
-                      <Link href="/register">판매시작 하기</Link>
-                    </Button>
-                  </div>
-                )}
-              </>
-            )}
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Menu className="h-5 w-5" />
-            </Button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary/10 via-primary/5 to-background py-8">
@@ -492,19 +405,19 @@ export default function Component() {
             <div className="space-y-4">
               <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
                 디지털 제품의 새로운 기준
-                <br />
+              <br />
                 <span className="text-primary">디지털마켓</span>
-              </h1>
+            </h1>
               <p className="text-lg text-muted-foreground">
                 최고의 디지털 제품을 만나보세요. UI/UX 디자인, 코드, 디지털 아트 등 다양한 카테고리의 프리미엄 제품을 제공합니다.
               </p>
               <div className="flex gap-4">
                 <Button size="lg" variant="outline" className="bg-black text-white" asChild>
                   <Link href="#search-section">둘러보기</Link>
-                </Button>
+              </Button>
                 <Button size="lg" variant="outline" asChild>
                   <Link href="/register">판매 시작하기</Link>
-                </Button>
+              </Button>
               </div>
             </div>
             <div className="relative h-[300px] hidden lg:block">
@@ -524,20 +437,20 @@ export default function Component() {
       <section className="py-8 ml-16">
         <div className="container">
           <div className="flex items-center justify-between mb-6">
-            <div>
+              <div>
               <h2 className="text-xl font-bold">인기 상품</h2>
               <p className="text-sm text-muted-foreground">가장 많은 사랑을 받고 있는 상품들을 만나보세요</p>
             </div>
             <Button variant="ghost" asChild>
               <Link href="#search-section">더 보기</Link>
             </Button>
-          </div>
+              </div>
           <div className="relative">
             <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
               {trendingProducts.map((product) => (
                 <div key={product.id} className="w-[280px] flex-shrink-0">
                   <ProductCard product={product} />
-                </div>
+              </div>
               ))}
             </div>
           </div>
@@ -598,7 +511,7 @@ export default function Component() {
                 필터
               </Button>
             </div>
-          </div>
+                  </div>
 
           {/* Category Pills */}
           <div className="flex flex-wrap gap-2">
@@ -659,7 +572,7 @@ export default function Component() {
                     <span>${priceRange[0]}</span>
                     <span>${priceRange[1]}</span>
                   </div>
-                </div>
+          </div>
 
                 {/* Quick Filters */}
                 <div className="space-y-3">
@@ -710,7 +623,7 @@ export default function Component() {
                   </div>
                 </div>
               </div>
-            </Card>
+              </Card>
           </aside>
 
           {/* Main Content */}
@@ -731,14 +644,14 @@ export default function Component() {
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {filteredProducts.map((product) => (
                   <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
+            ))}
+          </div>
             ) : (
               <div className="space-y-4">
                 {filteredProducts.map((product) => (
                   <ProductListItem key={product.id} product={product} />
                 ))}
-              </div>
+        </div>
             )}
 
             {/* Load More */}
@@ -746,8 +659,8 @@ export default function Component() {
               <div className="text-center mt-12">
                 <Button onClick={loadMore} disabled={isLoading} size="lg">
                   {isLoading ? "로딩 중..." : "더 보기"}
-                </Button>
-              </div>
+            </Button>
+          </div>
             )}
 
             {/* No Results */}
@@ -766,99 +679,8 @@ export default function Component() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-background border-t py-12">
-        <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 ml-16">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                  <Zap className="h-5 w-5 text-primary-foreground" />
-                </div>
-                <span className="font-bold text-xl">디지털마켓</span>
-              </div>
-              <p className="text-muted-foreground mb-4">안전하고 신뢰할 수 있는 디지털 제품 거래 플랫폼</p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">카테고리</h3>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>
-                  <Link href="/categories/games" className="hover:text-primary">
-                    게임 아이템
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/categories/software" className="hover:text-primary">
-                    소프트웨어
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/categories/music" className="hover:text-primary">
-                    디지털 음원
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/categories/mobile-apps" className="hover:text-primary">
-                    모바일 앱
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">고객지원</h3>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>
-                  <Link href="/support/faq" className="hover:text-primary">
-                    FAQ
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/support/contact" className="hover:text-primary">
-                    고객센터
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/support/refund-policy" className="hover:text-primary">
-                    환불정책
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/support/terms" className="hover:text-primary">
-                    이용약관
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">회사정보</h3>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>
-                  <Link href="/company/about" className="hover:text-primary">
-                    회사소개
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/company/careers" className="hover:text-primary">
-                    채용정보
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/company/partnership" className="hover:text-primary">
-                    파트너십
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/company/privacy" className="hover:text-primary">
-                    개인정보처리방침
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t mt-8 pt-8 text-center text-muted-foreground ml-16">
-            <p>&copy; 2025 자유템. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
+              
     </div>
   )
 }

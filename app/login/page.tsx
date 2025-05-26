@@ -69,7 +69,7 @@ export default function LoginPage() {
             <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center">
               <Zap className="h-6 w-6 text-primary-foreground" />
             </div>
-            <span className="font-bold text-2xl">디지털마켓</span>
+            <span className="font-bold text-2xl">자유템</span>
           </div>
           <CardTitle className="text-2xl">로그인</CardTitle>
           <CardDescription>계정에 로그인하여 디지털 제품을 만나보세요</CardDescription>
