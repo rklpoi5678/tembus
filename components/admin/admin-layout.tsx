@@ -34,34 +34,39 @@ import { Input } from "@/components/ui/input"
 
 const sidebarItems = [
   {
-    title: "Dashboard",
+    title: "대시보드",
     href: "/admin",
     icon: LayoutDashboard,
   },
   {
-    title: "Products",
+    title: "제품",
     href: "/admin/products",
     icon: Package,
   },
   {
-    title: "Users",
+    title: "사용자",
     href: "/admin/users",
     icon: Users,
   },
   {
-    title: "Orders",
+    title: "주문",
     href: "/admin/orders",
     icon: ShoppingCart,
   },
   {
-    title: "Analytics",
+    title: "분석",
     href: "/admin/analytics",
     icon: BarChart3,
   },
   {
-    title: "Settings",
+    title: "설정",
     href: "/admin/settings",
     icon: Settings,
+  },
+  {
+    title: "나가기",
+    href: "/",
+    icon: LogOut,
   },
 ]
 
@@ -75,31 +80,23 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   const { user, logout } = useAuth()
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Mobile sidebar overlay */}
-      {sidebarOpen && (
-        <div className="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden" onClick={() => setSidebarOpen(false)} />
-      )}
-
-      {/* Sidebar */}
+    <div className="min-h-screen bg-gray-50 flex">
+      {/* 사이드바 */}
       <div
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`z-50 w-64 bg-white shadow-lg flex-shrink-0 flex flex-col h-screen fixed lg:static top-0 left-0 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:inset-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
       >
         <div className="flex items-center justify-between h-16 px-6 border-b">
           <Link href="/admin" className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
               <LayoutDashboard className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="font-bold text-xl">Admin Panel</span>
+            <span className="font-bold text-xl">관리자 패널</span>
           </Link>
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(false)}>
             <X className="h-5 w-5" />
           </Button>
         </div>
-
-        <nav className="mt-6 px-3">
+        <nav className="mt-6 px-3 flex-1 overflow-y-auto">
           <div className="space-y-1">
             {sidebarItems.map((item) => {
               const isActive = pathname === item.href
@@ -121,27 +118,29 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         </nav>
       </div>
 
-      {/* Main content */}
-      <div className="lg:pl-64">
-        {/* Top header */}
-        <header className="bg-white shadow-sm border-b">
+      {/* 모바일 사이드바 오버레이 */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden" onClick={() => setSidebarOpen(false)} />
+      )}
+
+      {/* 메인 영역 */}
+      <div className="flex-1 flex flex-col min-h-screen">
+        {/* 상단 헤더 */}
+        <header className="bg-white shadow-sm border-b sticky top-0 z-30">
           <div className="flex items-center justify-between h-16 px-6">
             <div className="flex items-center gap-4">
               <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(true)}>
                 <Menu className="h-5 w-5" />
               </Button>
-
               <div className="relative hidden md:block">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input placeholder="Search..." className="pl-10 w-64" />
+                <Input placeholder="검색..." className="pl-10 w-64" />
               </div>
             </div>
-
             <div className="flex items-center gap-4">
               <Button variant="ghost" size="icon">
                 <Bell className="h-5 w-5" />
               </Button>
-
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
@@ -162,28 +161,27 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                   <DropdownMenuItem asChild>
                     <Link href="/admin/profile">
                       <User className="mr-2 h-4 w-4" />
-                      Profile
+                      프로필
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/admin/settings">
                       <Settings className="mr-2 h-4 w-4" />
-                      Settings
+                      설정
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={logout}>
                     <LogOut className="mr-2 h-4 w-4" />
-                    Log out
+                    로그아웃
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
           </div>
         </header>
-
-        {/* Page content */}
-        <main className="p-6">{children}</main>
+        {/* 페이지 콘텐츠 */}
+        <main className="flex-1 p-6 bg-gray-50">{children}</main>
       </div>
     </div>
   )

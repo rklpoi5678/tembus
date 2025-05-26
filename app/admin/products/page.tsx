@@ -107,13 +107,13 @@ export default function AdminProducts() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold">Products</h1>
-            <p className="text-muted-foreground">Manage your product catalog</p>
+            <h1 className="text-3xl font-bold">상품</h1>
+            <p className="text-muted-foreground">상품 카탈로그를 관리하세요</p>
           </div>
           <Button asChild>
             <Link href="/admin/products/new">
               <Plus className="mr-2 h-4 w-4" />
-              Add Product
+              상품 추가
             </Link>
           </Button>
         </div>
@@ -121,14 +121,14 @@ export default function AdminProducts() {
         {/* Filters */}
         <Card>
           <CardHeader>
-            <CardTitle>Filters</CardTitle>
+            <CardTitle>필터</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex flex-col md:flex-row gap-4">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search products..."
+                  placeholder="상품 검색..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
@@ -136,10 +136,10 @@ export default function AdminProducts() {
               </div>
               <Select value={categoryFilter} onValueChange={setCategoryFilter}>
                 <SelectTrigger className="w-48">
-                  <SelectValue placeholder="Category" />
+                  <SelectValue placeholder="카테고리" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Categories</SelectItem>
+                  <SelectItem value="all">모든 카테고리</SelectItem>
                   {categories.map((category) => (
                     <SelectItem key={category} value={category}>
                       {category}
@@ -149,13 +149,13 @@ export default function AdminProducts() {
               </Select>
               <Select value={statusFilter} onValueChange={setStatusFilter}>
                 <SelectTrigger className="w-48">
-                  <SelectValue placeholder="Status" />
+                  <SelectValue placeholder="상태" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="inactive">Inactive</SelectItem>
-                  <SelectItem value="draft">Draft</SelectItem>
+                  <SelectItem value="all">모든 상태</SelectItem>
+                  <SelectItem value="active">활성</SelectItem>
+                  <SelectItem value="inactive">비활성</SelectItem>
+                  <SelectItem value="draft">초안</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -165,7 +165,7 @@ export default function AdminProducts() {
         {/* Products Table */}
         <Card>
           <CardHeader>
-            <CardTitle>Products ({filteredProducts.length})</CardTitle>
+            <CardTitle>상품 ({filteredProducts.length}개)</CardTitle>
           </CardHeader>
           <CardContent>
             {loading ? (
@@ -180,14 +180,14 @@ export default function AdminProducts() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Product</TableHead>
-                    <TableHead>Category</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>Inventory</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Rating</TableHead>
-                    <TableHead>Sales</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                    <TableHead>상품</TableHead>
+                    <TableHead>카테고리</TableHead>
+                    <TableHead>가격</TableHead>
+                    <TableHead>재고</TableHead>
+                    <TableHead>상태</TableHead>
+                    <TableHead>평점</TableHead>
+                    <TableHead>판매량</TableHead>
+                    <TableHead className="text-right">작업</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -216,7 +216,9 @@ export default function AdminProducts() {
                         <div>
                           <p className="font-medium">${product.price}</p>
                           {product.originalPrice && (
-                            <p className="text-sm text-muted-foreground line-through">${product.originalPrice}</p>
+                            <p className="text-sm text-muted-foreground line-through">
+                              ${product.originalPrice}
+                            </p>
                           )}
                         </div>
                       </TableCell>
@@ -226,7 +228,7 @@ export default function AdminProducts() {
                             product.inventory > 10 ? "default" : product.inventory > 0 ? "secondary" : "destructive"
                           }
                         >
-                          {product.inventory} units
+                          {product.inventory}개
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -239,7 +241,13 @@ export default function AdminProducts() {
                                 : "outline"
                           }
                         >
-                          {product.status}
+                          {product.status === "active"
+                            ? "활성"
+                            : product.status === "inactive"
+                              ? "비활성"
+                              : product.status === "draft"
+                                ? "초안"
+                                : product.status}
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -258,23 +266,23 @@ export default function AdminProducts() {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuLabel>작업</DropdownMenuLabel>
                             <DropdownMenuItem asChild>
                               <Link href={`/products/${product.id}`}>
                                 <Eye className="mr-2 h-4 w-4" />
-                                View
+                                보기
                               </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
                               <Link href={`/admin/products/${product.id}/edit`}>
                                 <Edit className="mr-2 h-4 w-4" />
-                                Edit
+                                수정
                               </Link>
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem className="text-red-600" onClick={() => setDeleteProduct(product)}>
                               <Trash2 className="mr-2 h-4 w-4" />
-                              Delete
+                              삭제
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -291,19 +299,19 @@ export default function AdminProducts() {
         <AlertDialog open={!!deleteProduct} onOpenChange={() => setDeleteProduct(null)}>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogTitle>정말로 삭제하시겠습니까?</AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete the product "{deleteProduct?.name}" and
-                remove all associated data.
+                이 작업은 되돌릴 수 없습니다. &quot;{deleteProduct?.name}&quot; 상품이 영구적으로 삭제되며 모든 관련
+                데이터가 제거됩니다.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel>취소</AlertDialogCancel>
               <AlertDialogAction
                 onClick={() => deleteProduct && handleDeleteProduct(deleteProduct.id)}
                 className="bg-red-600 hover:bg-red-700"
               >
-                Delete
+                삭제
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

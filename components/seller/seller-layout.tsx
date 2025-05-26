@@ -87,7 +87,7 @@ const bottomItems = [
   },
   {
     title: "도움말",
-    href: "/seller/help",
+    href: "/support/faq",
     icon: HelpCircle,
   },
 ]

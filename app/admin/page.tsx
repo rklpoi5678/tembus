@@ -39,7 +39,7 @@ export default function AdminDashboard() {
         setAnalytics(data)
       }
     } catch (error) {
-      console.error("Failed to fetch analytics:", error)
+      console.error("분석 데이터 가져오기 실패:", error)
     } finally {
       setLoading(false)
     }
@@ -68,28 +68,28 @@ export default function AdminDashboard() {
 
   const stats = [
     {
-      title: "Total Revenue",
+      title: "총 수익",
       value: `$${analytics?.totalSales.toLocaleString() || 0}`,
       change: analytics?.revenueGrowth || 0,
       icon: DollarSign,
       color: "text-green-600",
     },
     {
-      title: "Total Orders",
+      title: "총 주문",
       value: analytics?.totalOrders.toLocaleString() || 0,
       change: analytics?.orderGrowth || 0,
       icon: ShoppingCart,
       color: "text-blue-600",
     },
     {
-      title: "Total Products",
+      title: "총 상품",
       value: analytics?.totalProducts.toLocaleString() || 0,
       change: 5.2,
       icon: Package,
       color: "text-purple-600",
     },
     {
-      title: "Total Users",
+      title: "총 사용자",
       value: analytics?.totalUsers.toLocaleString() || 0,
       change: 12.5,
       icon: Users,
@@ -100,21 +100,21 @@ export default function AdminDashboard() {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        {/* Header */}
+        {/* 헤더 */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold">Dashboard</h1>
-            <p className="text-muted-foreground">Welcome back! Here's what's happening with your store.</p>
+            <h1 className="text-3xl font-bold">대시보드</h1>
+            <p className="text-muted-foreground">다시 오신 것을 환영합니다! 스토어 현황을 살펴보세요.</p>
           </div>
           <Button asChild>
             <Link href="/admin/products/new">
               <Package className="mr-2 h-4 w-4" />
-              Add Product
+              상품 추가
             </Link>
           </Button>
         </div>
 
-        {/* Stats Cards */}
+        {/* 통계 카드 */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
             <Card key={index}>
@@ -138,7 +138,7 @@ export default function AdminDashboard() {
                     {stat.change > 0 ? "+" : ""}
                     {stat.change}%
                   </span>
-                  <span className="text-sm text-muted-foreground ml-1">from last month</span>
+                  <span className="text-sm text-muted-foreground ml-1">전월 대비</span>
                 </div>
               </CardContent>
             </Card>
@@ -146,10 +146,10 @@ export default function AdminDashboard() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Sales Chart */}
+          {/* 매출 차트 */}
           <Card>
             <CardHeader>
-              <CardTitle>Sales Overview</CardTitle>
+              <CardTitle>매출 개요</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -164,10 +164,10 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
 
-          {/* Category Sales */}
+          {/* 카테고리별 매출 */}
           <Card>
             <CardHeader>
-              <CardTitle>Sales by Category</CardTitle>
+              <CardTitle>카테고리별 매출</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -194,13 +194,13 @@ export default function AdminDashboard() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Top Products */}
+          {/* 인기 상품 */}
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>Top Products</CardTitle>
+              <CardTitle>인기 상품</CardTitle>
               <Button variant="outline" size="sm" asChild>
                 <Link href="/admin/products">
-                  View All
+                  전체 보기
                   <ArrowUpRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -215,7 +215,7 @@ export default function AdminDashboard() {
                       </div>
                       <div>
                         <p className="font-medium">{product.name}</p>
-                        <p className="text-sm text-muted-foreground">{product.salesCount} sales</p>
+                        <p className="text-sm text-muted-foreground">{product.salesCount}개 판매</p>
                       </div>
                     </div>
                     <div className="text-right">
@@ -228,13 +228,13 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
 
-          {/* Recent Orders */}
+          {/* 최근 주문 */}
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>Recent Orders</CardTitle>
+              <CardTitle>최근 주문</CardTitle>
               <Button variant="outline" size="sm" asChild>
                 <Link href="/admin/orders">
-                  View All
+                  전체 보기
                   <ArrowUpRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -258,7 +258,8 @@ export default function AdminDashboard() {
                               : "outline"
                         }
                       >
-                        {order.status}
+                        {order.status === "delivered" ? "배송 완료" : 
+                         order.status === "processing" ? "처리 중" : order.status}
                       </Badge>
                     </div>
                   </div>
