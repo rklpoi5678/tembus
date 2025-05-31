@@ -1,0 +1,4 @@
+<script>start("c:\\Users\\PW1234\\Desktop\\Tool\\MetaOS_Saas\\apps\\tembus\\prisma\\migrations\\");</script>
+<script>onHasParentDirectory();</script>
+<script>addRow("20250527170808_v1_tembus_migrate_development","20250527170808_v1_tembus_migrate_development",1,0,"0 B",1748365694,"5/28/25, 2:08:14 AM");</script>
+<script>addRow("migration_lock.toml","migration_lock.toml",0,128,"128 B",1748365694,"5/28/25, 2:08:14 AM");</script>

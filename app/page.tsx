@@ -1,30 +1,18 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState } from "react"
+import { useQuery } from '@tanstack/react-query'
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Slider } from "@/components/ui/slider"
 import {
   Search,
-  User,
-  Menu,
   Star,
   Download,
-  Shield,
-  Zap,
-  Gift,
-  Gamepad2,
-  Monitor,
-  Headphones,
-  Smartphone,
-  LogOut,
-  Settings,
-  Package,
-  Store,
   Filter,
   Grid3X3,
   List,
@@ -35,225 +23,38 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { CartIcon } from "@/components/cart-icon"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { useAuth } from "@/lib/auth-context"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import { Product } from "@/lib/types"
 
-interface Product {
-  id: number
-  title: string
-  description: string
-  price: number
-  originalPrice?: number
-  image: string
-  category: string
-  tags: string[]
-  rating: number
-  reviews: number
-  downloads: number
-  creator: {
-    name: string
-    avatar: string
-    verified: boolean
-    storeName: string
+
+// API 호출 함수들
+async function fetchProducts(): Promise<Product[]> {
+  const response = await fetch('/api/products')
+  if (!response.ok) {
+    throw new Error('Failed to fetch products')
   }
-  featured: boolean
-  trending: boolean
-  new: boolean
-  createdAt: string
+  return response.json()
 }
 
-const sampleProducts: Product[] = [
-    {
-      id: 1,
-    title: "Premium UI Kit for Mobile Apps",
-    description: "Complete design system with 200+ components, dark/light themes, and Figma source files",
-    price: 49,
-    originalPrice: 79,
-    image: "/placeholder.svg?height=300&width=400",
-    category: "Design",
-    tags: ["UI Kit", "Mobile", "Figma", "Design System"],
-    rating: 4.9,
-    reviews: 234,
-    downloads: 1250,
-    creator: {
-      name: "DesignStudio",
-      avatar: "/placeholder.svg?height=40&width=40",
-      verified: true,
-      storeName: "Design Studio",
-    },
-    featured: true,
-    trending: true,
-    new: false,
-    createdAt: "2024-01-15",
-    },
-    {
-      id: 2,
-    title: "React Component Library",
-    description: "Production-ready React components with TypeScript, Storybook, and comprehensive documentation",
-    price: 89,
-    image: "/placeholder.svg?height=300&width=400",
-    category: "Code",
-    tags: ["React", "TypeScript", "Components", "Frontend"],
-    rating: 4.8,
-    reviews: 156,
-    downloads: 890,
-    creator: {
-      name: "CodeCraft",
-      avatar: "/placeholder.svg?height=40&width=40",
-      verified: true,
-      storeName: "Code Craft",
-    },
-    featured: false,
-    trending: true,
-    new: true,
-    createdAt: "2024-01-20",
-    },
-    {
-      id: 3,
-    title: "Digital Marketing Course Bundle",
-    description: "Complete guide to digital marketing with 50+ video lessons, templates, and case studies",
-    price: 129,
-    originalPrice: 199,
-    image: "/placeholder.svg?height=300&width=400",
-    category: "Education",
-    tags: ["Marketing", "Course", "Business", "Strategy"],
-      rating: 4.7,
-    reviews: 89,
-    downloads: 567,
-    creator: {
-      name: "MarketingPro",
-      avatar: "/placeholder.svg?height=40&width=40",
-      verified: false,
-      storeName: "Marketing Pro",
-    },
-    featured: true,
-    trending: false,
-    new: false,
-    createdAt: "2024-01-10",
-    },
-    {
-      id: 4,
-    title: "Minimalist Logo Collection",
-    description: "100 premium minimalist logos in vector format, perfect for startups and modern brands",
-    price: 35,
-    image: "/placeholder.svg?height=300&width=400",
-    category: "Design",
-    tags: ["Logo", "Branding", "Vector", "Minimalist"],
-      rating: 4.6,
-    reviews: 312,
-    downloads: 2100,
-    creator: {
-      name: "BrandMaster",
-      avatar: "/placeholder.svg?height=40&width=40",
-      verified: true,
-      storeName: "Brand Master",
-    },
-    featured: false,
-    trending: false,
-    new: false,
-    createdAt: "2024-01-05",
-  },
-  {
-    id: 5,
-    title: "Python Automation Scripts",
-    description: "Collection of 25 Python scripts for automating daily tasks, web scraping, and data processing",
-    price: 25,
-    image: "/placeholder.svg?height=300&width=400",
-    category: "Code",
-    tags: ["Python", "Automation", "Scripts", "Productivity"],
-    rating: 4.5,
-    reviews: 78,
-    downloads: 445,
-    creator: {
-      name: "AutoDev",
-      avatar: "/placeholder.svg?height=40&width=40",
-      verified: false,
-      storeName: "Auto Dev",
-    },
-    featured: false,
-    trending: true,
-    new: true,
-    createdAt: "2024-01-18",
-  },
-  {
-    id: 6,
-    title: "Social Media Templates Pack",
-    description: "500+ Instagram, Facebook, and Twitter templates for Photoshop and Canva",
-    price: 19,
-    originalPrice: 39,
-    image: "/placeholder.svg?height=300&width=400",
-    category: "Design",
-    tags: ["Social Media", "Templates", "Instagram", "Marketing"],
-    rating: 4.4,
-    reviews: 445,
-    downloads: 3200,
-    creator: {
-      name: "SocialDesign",
-      avatar: "/placeholder.svg?height=40&width=40",
-      verified: true,
-      storeName: "Social Design",
-    },
-    featured: false,
-    trending: false,
-    new: false,
-    createdAt: "2023-12-20",
-  },
-  {
-    id: 7,
-    title: "E-commerce Website Template",
-    description: "Modern, responsive e-commerce template built with Next.js and Tailwind CSS",
-    price: 79,
-    image: "/placeholder.svg?height=300&width=400",
-    category: "Code",
-    tags: ["Next.js", "E-commerce", "Template", "Tailwind"],
-    rating: 4.8,
-    reviews: 167,
-    downloads: 723,
-    creator: {
-      name: "WebCraft",
-      avatar: "/placeholder.svg?height=40&width=40",
-      verified: true,
-      storeName: "Web Craft",
-    },
-    featured: true,
-    trending: false,
-    new: false,
-    createdAt: "2024-01-12",
-  },
-  {
-    id: 8,
-    title: "Photography Lightroom Presets",
-    description: "Professional Lightroom presets for portrait, landscape, and street photography",
-    price: 15,
-    image: "/placeholder.svg?height=300&width=400",
-    category: "Photography",
-    tags: ["Lightroom", "Presets", "Photography", "Editing"],
-    rating: 4.7,
-    reviews: 289,
-    downloads: 1890,
-    creator: {
-      name: "PhotoPro",
-      avatar: "/placeholder.svg?height=40&width=40",
-      verified: false,
-      storeName: "Photo Pro",
-    },
-    featured: false,
-    trending: true,
-    new: false,
-    createdAt: "2024-01-08",
-  },
-]
+async function fetchTrendingProducts(): Promise<Product[]> {
+  const response = await fetch('/api/products/trending')
+  if (!response.ok) {
+    throw new Error('Failed to fetch trending products')
+  }
+  return response.json()
+}
+
+async function fetchTags(): Promise<string[]> {
+  const response = await fetch ('/api/products/tags')
+  if (!response.ok) {
+    throw new Error('Failed to fetch tags')
+  }
+  return response.json()
+}
+
+
 
 const categories = ["All", "Design", "Code", "Education", "Photography", "Music", "3D", "Writing"]
 const sortOptions = [
@@ -267,7 +68,6 @@ const sortOptions = [
 
 export default function Component() {
   const { user, logout, loading } = useAuth()
-  const [products, setProducts] = useState<Product[]>(sampleProducts)
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [sortBy, setSortBy] = useState("trending")
@@ -280,98 +80,31 @@ export default function Component() {
   const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
 
-  // Get trending products
-  const trendingProducts = useMemo(() => {
-    return products
-      .filter((product) => product.trending)
-      .sort((a, b) => b.downloads - a.downloads)
-      .slice(0, 8)
-  }, [products])
+  const { data: products, isLoading: productsLoading } = useQuery({
+    queryKey: ['products', searchQuery, selectedCategory, priceRange, selectedTags, showFeatured, showNew, sortBy],
+    queryFn: () => fetch(`/api/products?${new URLSearchParams({
+      query: searchQuery,
+      category: selectedCategory,
+      minPrice: priceRange[0].toString(),
+      maxPrice: priceRange[1].toString(),
+      tags: selectedTags.join(','),
+      featured: showFeatured.toString(),
+      new: showNew.toString(),
+      sortBy
+    })}`).then(res => res.json())
+  })
 
-  // Get all unique tags
-  const allTags = useMemo(() => {
-    const tags = new Set<string>()
-    products.forEach((product) => {
-      product.tags.forEach((tag) => tags.add(tag))
-    })
-    return Array.from(tags).sort()
-  }, [products])
+  const { data: trendingProducts , isLoading: trendingLoading } =useQuery({
+    queryKey : ['trending-products'],
+    queryFn: fetchTrendingProducts
+  })
 
-  // Filter and sort products
-  const filteredProducts = useMemo(() => {
-    const filtered = products.filter((product) => {
-      // Search filter
-      if (searchQuery) {
-        const query = searchQuery.toLowerCase()
-        if (
-          !product.title.toLowerCase().includes(query) &&
-          !product.description.toLowerCase().includes(query) &&
-          !product.tags.some((tag) => tag.toLowerCase().includes(query))
-        ) {
-          return false
-        }
-      }
-
-      // Category filter
-      if (selectedCategory !== "All" && product.category !== selectedCategory) {
-        return false
-      }
-
-      // Price filter
-      if (product.price < priceRange[0] || product.price > priceRange[1]) {
-        return false
-      }
-
-      // Tags filter
-      if (selectedTags.length > 0) {
-        if (!selectedTags.some((tag) => product.tags.includes(tag))) {
-          return false
-        }
-      }
-
-      // Featured filter
-      if (showFeatured && !product.featured) {
-        return false
-      }
-
-      // New filter
-      if (showNew && !product.new) {
-        return false
-      }
-
-      return true
-    })
-
-    // Sort products
-    switch (sortBy) {
-      case "newest":
-        filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-        break
-      case "popular":
-        filtered.sort((a, b) => b.downloads - a.downloads)
-        break
-      case "price-low":
-        filtered.sort((a, b) => a.price - b.price)
-        break
-      case "price-high":
-        filtered.sort((a, b) => b.price - a.price)
-        break
-      case "rating":
-        filtered.sort((a, b) => b.rating - a.rating)
-        break
-      case "trending":
-      default:
-        filtered.sort((a, b) => {
-          if (a.trending && !b.trending) return -1
-          if (!a.trending && b.trending) return 1
-          return b.downloads - a.downloads
-        })
-        break
-    }
-
-    return filtered
-  }, [products, searchQuery, selectedCategory, sortBy, priceRange, selectedTags, showFeatured, showNew])
-
+  // 컴포넌트 내부에 쿼리 추가
+  const { data: tags = [] } = useQuery({
+    queryKey: ['tags'],
+    queryFn: fetchTags
+  })
+  
   const handleTagToggle = (tag: string) => {
     setSelectedTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]))
   }
@@ -445,15 +178,19 @@ export default function Component() {
               <Link href="#search-section">더 보기</Link>
             </Button>
               </div>
-          <div className="relative">
-            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-              {trendingProducts.map((product) => (
-                <div key={product.id} className="w-[280px] flex-shrink-0">
-                  <ProductCard product={product} />
+              {trendingLoading ? (
+            <div>로딩 중...</div>
+          ) : (
+            <div className="relative">
+              <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+                {trendingProducts?.map((product) => (
+                  <div key={product.id} className="w-[280px] flex-shrink-0">
+                    <ProductCard product={product} />
+                  </div>
+                ))}
               </div>
-              ))}
             </div>
-          </div>
+              )}
         </div>
       </section>
 
@@ -529,22 +266,22 @@ export default function Component() {
           </div>
 
           {/* Active Filters */}
-          {(selectedTags.length > 0 || showFeatured || showNew || priceRange[0] > 0 || priceRange[1] < 200) && (
+          {(tags.length > 0 || showFeatured || showNew || priceRange[0] > 0 || priceRange[1] < 200) && (
             <div className="flex flex-wrap gap-2 items-center">
               <span className="text-sm text-muted-foreground">활성 필터:</span>
-              {selectedTags.map((tag) => (
+              {tags.map((tag) => (
                 <Badge key={tag} variant="secondary" className="gap-1">
                   {tag}
                   <X className="h-3 w-3 cursor-pointer" onClick={() => handleTagToggle(tag)} />
                 </Badge>
               ))}
-              {showFeatured && (
+              {tags && (
                 <Badge variant="secondary" className="gap-1">
                   Featured
                   <X className="h-3 w-3 cursor-pointer" onClick={() => setShowFeatured(false)} />
                 </Badge>
               )}
-              {showNew && (
+              {tags && (
                 <Badge variant="secondary" className="gap-1">
                   New
                   <X className="h-3 w-3 cursor-pointer" onClick={() => setShowNew(false)} />
@@ -569,10 +306,10 @@ export default function Component() {
                   <label className="text-sm font-medium mb-2 block">가격 범위</label>
                   <Slider value={priceRange} onValueChange={setPriceRange} max={200} step={5} className="mb-2" />
                   <div className="flex justify-between text-sm text-muted-foreground">
-                    <span>${priceRange[0]}</span>
-                    <span>${priceRange[1]}</span>
+                    <span>₩{priceRange[0]}</span>
+                    <span>₩{priceRange[1]}</span>
                   </div>
-          </div>
+              </div>
 
                 {/* Quick Filters */}
                 <div className="space-y-3">
@@ -602,7 +339,7 @@ export default function Component() {
                 <div>
                   <label className="text-sm font-medium mb-2 block">태그</label>
                   <div className="space-y-2 max-h-48 overflow-y-auto">
-                    {allTags.map((tag) => (
+                    {tags.map((tag) => (
                       <div key={tag} className="flex items-center space-x-2">
                         <Checkbox
                           id={tag}
@@ -633,7 +370,7 @@ export default function Component() {
               <div>
                 <h1 className="text-2xl font-bold">상품 둘러보기</h1>
                 <p className="text-muted-foreground">
-                  {filteredProducts.length}개의 상품
+                  {products?.length || 0}개의 상품
                   {searchQuery && ` "${searchQuery}" 검색 결과`}
                 </p>
               </div>
@@ -642,20 +379,20 @@ export default function Component() {
             {/* Products Grid/List */}
             {viewMode === "grid" ? (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredProducts.map((product) => (
+                {products?.map((product: Product) => (
                   <ProductCard key={product.id} product={product} />
             ))}
           </div>
             ) : (
               <div className="space-y-4">
-                {filteredProducts.map((product) => (
+                {products?.map((product: Product) => (
                   <ProductListItem key={product.id} product={product} />
                 ))}
         </div>
             )}
 
             {/* Load More */}
-            {filteredProducts.length > 0 && (
+            {products?.length > 0 && (
               <div className="text-center mt-12">
                 <Button onClick={loadMore} disabled={isLoading} size="lg">
                   {isLoading ? "로딩 중..." : "더 보기"}
@@ -664,7 +401,7 @@ export default function Component() {
             )}
 
             {/* No Results */}
-            {filteredProducts.length === 0 && (
+            {products?.length === 0 && (
               <div className="text-center py-12">
                 <div className="text-6xl mb-4">🔍</div>
                 <h3 className="text-xl font-semibold mb-2">검색 결과가 없습니다</h3>
@@ -694,16 +431,14 @@ function ProductCard({ product }: { product: Product }) {
         <Link href={`/products/${product.id}`}>
           <div className="relative aspect-[4/3] overflow-hidden">
             <Image
-              src={product.image || "/placeholder.svg"}
-              alt={product.title}
+              src={product.image_url || "/placeholder.svg"}
+              alt={product.name}
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-300"
             />
             {/* Badges */}
             <div className="absolute top-3 left-3 flex gap-2">
               {product.featured && <Badge className="bg-yellow-500">Featured</Badge>}
-              {product.trending && <Badge className="bg-red-500">Trending</Badge>}
-              {product.new && <Badge className="bg-green-500">New</Badge>}
             </div>
             {/* Actions */}
             <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -729,14 +464,14 @@ function ProductCard({ product }: { product: Product }) {
           {/* Creator */}
           <div className="flex items-center gap-2 mb-3">
             <Image
-              src={product.creator.avatar || "/placeholder.svg"}
-              alt={product.creator.name}
+              src={product.seller.logo_url || "/placeholder.svg"}
+              alt={product.seller.storeName || "tembus"}
               width={24}
               height={24}
               className="rounded-full"
             />
-            <span className="text-sm text-muted-foreground">{product.creator.name}</span>
-            {product.creator.verified && (
+            <span className="text-sm text-muted-foreground">{product.seller.storeName}</span>
+            {product.seller.verified && (
               <Badge variant="secondary" className="text-xs px-1">
                 ✓
               </Badge>
@@ -745,9 +480,9 @@ function ProductCard({ product }: { product: Product }) {
 
           {/* Title and Description */}
           <Link href={`/products/${product.id}`}>
-            <h3 className="font-semibold line-clamp-2 hover:text-primary transition-colors mb-2">{product.title}</h3>
+            <h3 className="font-semibold line-clamp-2 hover:text-primary transition-colors mb-2">{product.name}</h3>
           </Link>
-          <p className="text-sm text-muted-foreground line-clamp-2 mb-3">{product.description}</p>
+          <p className="text-sm text-muted-foreground line-clamp-2 mb-3">{product.shortDescription}</p>
 
           {/* Tags */}
           <div className="flex flex-wrap gap-1 mb-3">
@@ -762,21 +497,21 @@ function ProductCard({ product }: { product: Product }) {
           <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">
             <div className="flex items-center gap-1">
               <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-              <span>{product.rating}</span>
-              <span>({product.reviews})</span>
+              <span>{Number(product.rating).toFixed(1)}</span>
+              <span>({product.review_count})</span>
             </div>
             <div className="flex items-center gap-1">
               <Download className="h-3 w-3" />
-              <span>{product.downloads.toLocaleString()}</span>
+              <span>{product.download_url?.toLocaleString()}</span>
             </div>
           </div>
 
           {/* Price */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-lg font-bold">${product.price}</span>
-              {product.originalPrice && (
-                <span className="text-sm text-muted-foreground line-through">${product.originalPrice}</span>
+              <span className="text-lg font-bold">₩{Number(product.price).toFixed(0)}</span>
+              {product.original_price && (
+                <span className="text-sm text-muted-foreground line-through">₩{Number(product.original_price).toFixed(0)}</span>
               )}
             </div>
           </div>
@@ -801,12 +536,10 @@ function ProductListItem({ product }: { product: Product }) {
       <div className="flex gap-6">
         <Link href={`/products/${product.id}`} className="flex-shrink-0">
           <div className="relative w-48 h-32 rounded-lg overflow-hidden">
-            <Image src={product.image || "/placeholder.svg"} alt={product.title} fill className="object-cover" />
+            <Image src={product.image_url || "/placeholder.svg"} alt={product.name} fill className="object-cover" />
             {/* Badges */}
             <div className="absolute top-2 left-2 flex gap-1">
               {product.featured && <Badge className="bg-yellow-500 text-xs">Featured</Badge>}
-              {product.trending && <Badge className="bg-red-500 text-xs">Trending</Badge>}
-              {product.new && <Badge className="bg-green-500 text-xs">New</Badge>}
             </div>
           </div>
         </Link>
@@ -815,14 +548,14 @@ function ProductListItem({ product }: { product: Product }) {
           {/* Creator */}
           <div className="flex items-center gap-2 mb-2">
             <Image
-              src={product.creator.avatar || "/placeholder.svg"}
-              alt={product.creator.name}
+              src={product.seller.logo_url || "/placeholder.svg"}
+              alt={product.seller.user?.name || "seller"}
               width={20}
               height={20}
               className="rounded-full"
             />
-            <span className="text-sm text-muted-foreground">{product.creator.name}</span>
-            {product.creator.verified && (
+            <span className="text-sm text-muted-foreground">{product.seller.user?.name || "seller"}</span>
+            {product.seller.verified && (
               <Badge variant="secondary" className="text-xs px-1">
                 ✓
               </Badge>
@@ -831,7 +564,7 @@ function ProductListItem({ product }: { product: Product }) {
 
           {/* Title and Description */}
           <Link href={`/products/${product.id}`}>
-            <h3 className="font-semibold text-lg hover:text-primary transition-colors mb-2">{product.title}</h3>
+            <h3 className="font-semibold text-lg hover:text-primary transition-colors mb-2">{product.name}</h3>
           </Link>
           <p className="text-muted-foreground mb-3 line-clamp-2">{product.description}</p>
 
@@ -848,12 +581,12 @@ function ProductListItem({ product }: { product: Product }) {
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
             <div className="flex items-center gap-1">
               <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              <span>{product.rating}</span>
-              <span>({product.reviews} reviews)</span>
+              <span>{Number(product.rating).toFixed(1)}</span>
+              <span>({product.review_count} reviews)</span>
             </div>
             <div className="flex items-center gap-1">
               <Download className="h-4 w-4" />
-              <span>{product.downloads.toLocaleString()} downloads</span>
+              <span>{product.download_url?.toLocaleString()} downloads</span>
             </div>
           </div>
         </div>
@@ -872,9 +605,9 @@ function ProductListItem({ product }: { product: Product }) {
           {/* Price and Button */}
           <div className="text-right">
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-xl font-bold">${product.price}</span>
-              {product.originalPrice && (
-                <span className="text-sm text-muted-foreground line-through">${product.originalPrice}</span>
+              <span className="text-xl font-bold">₩{Number(product.price).toFixed(0)}</span>
+              {product.original_price && (
+                <span className="text-sm text-muted-foreground line-through">₩{Number(product.original_price).toFixed(0)}</span>
               )}
             </div>
             <Button>

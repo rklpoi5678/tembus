@@ -1,0 +1,370 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../lib/generated/prisma"
+  previewFeatures = ["multiSchema", "postgresqlExtensions"] // @@schema("public") 를 계속 쓰려면 multiSchema 유지 
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("PRISMA_URL")
+  schemas    = ["public"]
+  extensions = [uuidOssp(map: "uuid-ossp")]
+}
+
+/**
+ * ───────────────────────── PUBLIC 스키마 ─────────────────────────
+ */
+
+model Product {
+  id               Int     @id @default(autoincrement())
+  name             String  @db.VarChar(255)
+  shortDescription String
+  description      String?
+
+  type   ProductType   @default(digital)
+  status ProductStatus @default(draft)
+
+  price          Decimal  @db.Decimal(10, 2)
+  original_price Decimal? @db.Decimal(10, 2)
+  currency       String   @default("KRW") @db.VarChar(10)
+
+  stock_quantity Int     @default(0)
+  is_active      Boolean @default(true)
+
+  image_url        String? @db.VarChar(500)
+  digital_file_url String? @db.VarChar(500)
+  download_url     String?
+  file_size        String? @db.VarChar
+
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+
+  rating       Decimal @default(0) @db.Decimal(3, 2)
+  review_count Int     @default(0)
+  sales_count  Int     @default(0)
+
+  featured Boolean @default(false)
+
+  inventory      Json?
+  specifications Json?
+
+  // 관계필드
+  category_id Int?
+  seller_id   String @db.Uuid
+
+  categories categories? @relation(fields: [category_id], references: [id])
+  seller     sellers     @relation(fields: [seller_id], references: [id])
+
+  tags           String[] // Postgresql Array 사용
+  product_images product_images[]
+  reviews        reviews[]
+  cart_items     cart_items[]
+  wishlists      wishlists[]
+  order_items    order_items[]
+
+  @@map("products")
+  @@schema("public")
+}
+
+model addresses {
+  id       String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  street   String @db.VarChar(255)
+  city     String @db.VarChar(100)
+  state    String @db.VarChar(100)
+  zip_code String @db.VarChar(20)
+  country  String @db.VarChar(100)
+
+  shippingOrders orders[] @relation("shipping")
+  billingOrders  orders[] @relation("billing")
+
+  @@schema("public")
+}
+
+model analytics {
+  id                String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  total_sales       Decimal  @db.Decimal(14, 2)
+  total_orders      Int
+  total_products    Int
+  total_users       Int
+  revenue_growth    Decimal  @db.Decimal(5, 2)
+  order_growth      Decimal  @db.Decimal(5, 2)
+  top_products      Json?
+  sales_by_category Json?
+  sales_by_month    Json?
+  created_at        DateTime @default(now()) @db.Timestamptz(6)
+  updated_at        DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+
+  @@schema("public")
+}
+
+model cart_items {
+  id         Int      @id @default(autoincrement())
+  user_id    String?  @db.Uuid
+  product_id Int?
+  quantity   Int      @default(1)
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  price      Decimal  @db.Decimal(10, 2)
+
+  products Product? @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  users    users?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, product_id])
+  @@schema("public")
+}
+
+model categories {
+  id          Int     @id @default(autoincrement())
+  name        String  @db.VarChar(100)
+  description String?
+  icon        String? @db.VarChar(50)
+
+  slug String @unique @db.VarChar(255)
+
+  parentId Int?
+  parent   categories?  @relation("CategoryParent", fields: [parentId], references: [id])
+  children categories[] @relation("CategoryParent")
+
+  product_count Int @default(0)
+
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at DateTime? @default(now()) @updatedAt @db.Timestamptz(6)
+
+  products Product[]
+
+  @@schema("public")
+}
+
+model order_items {
+  id         String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  order_id   String  @db.Uuid
+  product_id Int
+  quantity   Int
+  price      Decimal @db.Decimal(10, 2)
+  total      Decimal @db.Decimal(10, 2)
+
+  order   orders  @relation(fields: [order_id], references: [id])
+  product Product @relation(fields: [product_id], references: [id])
+
+  @@schema("public")
+}
+
+model orders {
+  id                  String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  order_number        String         @db.VarChar(50)
+  user_id             String         @db.Uuid
+  subtotal            Decimal        @db.Decimal(10, 2)
+  tax                 Decimal        @db.Decimal(10, 2)
+  shipping            Decimal        @db.Decimal(10, 2)
+  total               Decimal        @db.Decimal(10, 2)
+  status              order_status
+  payment_status      payment_status
+  payment_method      String         @db.VarChar(50)
+  shipping_address_id String         @db.Uuid
+  billing_address_id  String         @db.Uuid
+  tracking_number     String?        @db.VarChar(100)
+  notes               String?
+  created_at          DateTime       @default(now()) @db.Timestamptz(6)
+  updated_at          DateTime       @default(now()) @updatedAt @db.Timestamptz(6)
+
+  user            users         @relation(fields: [user_id], references: [id])
+  shippingAddress addresses     @relation("shipping", fields: [shipping_address_id], references: [id])
+  billingAddress  addresses     @relation("billing", fields: [billing_address_id], references: [id])
+  items           order_items[]
+
+  @@schema("public")
+}
+
+model product_images {
+  id         Int      @id @default(autoincrement())
+  product_id Int
+  image_url  String   @db.VarChar(500)
+  alt_text   String?  @db.VarChar(255)
+  is_primary Boolean  @default(false)
+  sort_order Int      @default(0)
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
+
+  @@index([product_id, sort_order])
+  @@index([product_id, is_primary])
+  @@schema("public")
+}
+
+model reviews {
+  id         Int    @id @default(autoincrement())
+  user_id    String @db.Uuid
+  product_id Int
+  rating     Int // 1~5범위
+
+  title                String? @db.VarChar(255)
+  comment              String?
+  is_verified_purchase Boolean @default(false)
+  helpful_count        Int     @default(0)
+
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at DateTime? @default(now()) @updatedAt @db.Timestamptz(6)
+
+  product Product @relation(fields: [product_id], references: [id])
+  user    users   @relation(fields: [user_id], references: [id])
+
+  @@unique([user_id, product_id])
+  @@index([product_id, created_at])
+  @@index([product_id, rating])
+  @@schema("public")
+}
+
+model user_auth {
+  id                  Int       @id @default(autoincrement())
+  user_id             String    @unique @db.Uuid
+  password_hash       String
+  reset_token         String?
+  reset_token_expires DateTime? @db.Timestamptz(6)
+  email_verified      Boolean   @default(false)
+  verification_token  String?
+  last_login          DateTime? @db.Timestamptz(6)
+  created_at          DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at          DateTime  @default(now()) @updatedAt @db.Timestamptz(6)
+
+  user users? @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id], map: "idx_user_auth_user_id")
+  @@schema("public")
+}
+
+model user_sessions {
+  id            Int       @id @default(autoincrement())
+  user_id       String?   @db.Uuid
+  session_token String    @unique
+  expires_at    DateTime  @db.Timestamptz(6)
+  created_at    DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime? @default(now()) @updatedAt @db.Timestamptz(6)
+
+  user users? @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([session_token], map: "idx_user_sessions_token")
+  @@index([user_id], map: "idx_user_sessions_user_id")
+  @@schema("public")
+}
+
+model users {
+  id       String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email    String   @unique @db.VarChar(255)
+  name     String?  @db.VarChar(255)
+  role     UserRole @default(seller)
+  avatar   String?
+  verified Boolean?
+  address  Json?
+  phone    String?  @db.VarChar(50)
+
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at DateTime? @default(now()) @updatedAt @db.Timestamptz(6)
+  deleted_at DateTime? @db.Timestamptz(6)
+
+  seller     sellers?
+  auth       user_auth?
+  sessions   user_sessions[]
+  cart_items cart_items[]
+  orders     orders[]
+  reviews    reviews[]
+  wishlists  wishlists[]
+
+  @@schema("public")
+}
+
+model sellers {
+  id      String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id String @unique @db.Uuid
+  user    users  @relation(fields: [user_id], references: [id])
+
+  storeName        String? @unique @db.VarChar(100)
+  slug             String? @unique @db.VarChar(100) //storeurl -> slug (https://yourapp.com/stores/my-shop) my-shop을 slug로 처리 /stores/[slug]
+  storeDescription String?
+  logo_url         String? @db.VarChar(500)
+  banner_url       String? @db.VarChar(500)
+
+  verified Boolean?     @default(false)
+  status   SellerStatus @default(pending)
+
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+
+  products Product[]
+
+  @@schema("public")
+}
+
+model wishlists {
+  id         Int       @id @default(autoincrement())
+  user_id    String?   @db.Uuid
+  product_id Int
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+
+  product Product? @relation(fields: [product_id], references: [id])
+  user    users?   @relation(fields: [user_id], references: [id])
+
+  @@unique([user_id, product_id])
+  @@schema("public")
+}
+
+/**
+ * ─────────────────────────── ENUMS ───────────────────────────
+ */
+
+enum order_status {
+  pending
+  processing
+  shipped
+  delivered
+  cancelled
+  refunded
+
+  @@schema("public")
+}
+
+enum payment_status {
+  pending
+  paid
+  failed
+  refunded
+
+  @@schema("public")
+}
+
+enum UserRole {
+  buyer
+  seller
+  admin
+
+  @@schema("public")
+}
+
+enum SellerStatus {
+  pending
+  active
+  suspended
+  deactivated
+
+  @@schema("public")
+}
+
+enum ProductStatus {
+  draft
+  published
+  archived
+
+  @@schema("public")
+}
+
+enum ProductType {
+  digital
+  service
+  physical
+
+  @@schema("public")
+}
