@@ -4,11 +4,10 @@ import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { Folder, File, Image, Video, Music, Upload, Search, MoreVertical, Download, Trash2 } from "lucide-react"
+import { Folder, File, Image, Video, Music, Upload, Search, Download, Trash2 } from "lucide-react"
 import { SellerLayout } from "@/components/seller/seller-layout"
 
 export default function LibraryPage() {

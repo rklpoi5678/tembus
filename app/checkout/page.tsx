@@ -114,6 +114,7 @@ export default function CheckoutPage() {
         description: "Failed to place order. Please try again.",
         variant: "destructive",
       })
+      console.error(error)
     } finally {
       setProcessing(false)
     }

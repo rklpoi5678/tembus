@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Building2, Users, Target, Award, Zap, User } from "lucide-react"
+import { Building2, Users, Target, Award, User } from "lucide-react"
 import Link from "next/link"
-import { CartIcon } from "@/components/cart-icon"
 
 export default function AboutPage() {
   const stats = [

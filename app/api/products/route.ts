@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     const products = await prisma.product.findMany({
       include: {
@@ -20,6 +20,7 @@ export async function GET(request: Request) {
     
     return NextResponse.json(products)
   } catch (error) {
+    console.error(error)
     return NextResponse.json(
       { error: 'Failed to fetch products' },
       { status: 500 }

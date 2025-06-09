@@ -66,7 +66,6 @@ const topProducts = [
 
 export default function AdminAnalyticsPage() {
   const [timeRange, setTimeRange] = useState("12months")
-  const [selectedMetric, setSelectedMetric] = useState("revenue")
 
   const currentMonthRevenue = 95000
   const previousMonthRevenue = 89000
@@ -362,7 +361,7 @@ export default function AdminAnalyticsPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {trafficData.map((source, index) => (
+                {trafficData.map((source) => (
                   <div key={source.source} className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">

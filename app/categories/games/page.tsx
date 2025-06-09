@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Gamepad2, Star, Filter, Search, Zap, User, Menu } from 'lucide-react'
+import { Gamepad2, Star, Filter, Search, Zap, User } from 'lucide-react'
 import Image from "next/image"
 import Link from "next/link"
 import { CartIcon } from "@/components/cart-icon"

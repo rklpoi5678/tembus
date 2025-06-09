@@ -18,7 +18,7 @@ import {
 } from "lucide-react"
 import { SellerLayout } from "@/components/seller/seller-layout"
 import Link from "next/link"
-import { useAuth } from "@/lib/auth-context"
+import { useUser } from "@clerk/nextjs"
 import Image from "next/image"
 
 const gettingStartedSteps = [
@@ -81,7 +81,7 @@ const gettingStartedSteps = [
 ]
 
 export default function SellerDashboard() {
-  const { user } = useAuth()
+  const { user } = useUser()
   const [analytics, setAnalytics] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 

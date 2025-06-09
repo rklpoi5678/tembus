@@ -10,36 +10,19 @@ import { Textarea } from "@/components/ui/textarea"
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
   Calendar,
   Plus,
   Users,
   MapPin,
   Clock,
-  MoreHorizontal,
-  Edit,
   Trash2,
-  Copy,
-  Share,
-  Eye,
-  Settings,
   Ticket,
-  TrendingUp,
-  UserCheck,
-  DollarSign,
 } from "lucide-react"
 import { SellerLayout } from "@/components/seller/seller-layout"
 

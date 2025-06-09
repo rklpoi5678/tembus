@@ -11,7 +11,6 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { ArrowLeft, Loader2, Zap, CheckCircle } from "lucide-react"
 
 export default function ResetPasswordPage() {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const token = searchParams.get("token")
 
@@ -50,6 +49,7 @@ export default function ResetPasswordPage() {
       }
     } catch (error) {
       setError("비밀번호 재설정 중 오류가 발생했습니다.")
+      console.error(error)
     } finally {
       setIsLoading(false)
     }

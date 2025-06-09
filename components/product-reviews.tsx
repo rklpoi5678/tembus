@@ -80,6 +80,7 @@ export function ProductReviews({ productId, reviews, averageRating, totalReviews
         })
       }
     } catch (error) {
+      console.error("리뷰 등록 중 오류가 발생했습니다.", error)
       toast({
         title: "오류",
         description: "리뷰 등록 중 오류가 발생했습니다.",

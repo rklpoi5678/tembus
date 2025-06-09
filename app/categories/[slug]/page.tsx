@@ -12,7 +12,6 @@ import { getCategoryBySlug } from "@/lib/categories-data"
 import { SubcategoryNav } from "@/components/categories/subcategory-nav"
 import { ProductCard } from "@/components/product-card"
 import type { Product } from "@/lib/types"
-import { Header } from "@/components/header"
 // Mock products data for demonstration
 const mockProducts: Product[] = [
   {

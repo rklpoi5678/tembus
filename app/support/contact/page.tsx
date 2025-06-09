@@ -10,9 +10,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Phone, Mail, Clock, MapPin, Zap, User, Send, Loader2 } from "lucide-react"
+import { Phone, Mail, Clock, MapPin, Send, Loader2 } from "lucide-react"
 import Link from "next/link"
-import { CartIcon } from "@/components/cart-icon"
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({

@@ -3,7 +3,6 @@ import { useState } from "react"
 import { SignUpButton, useUser } from "@clerk/nextjs"
 import { useQuery } from "@tanstack/react-query"
 
-import { Header } from "@/components/header"
 import { Button, buttonVariants } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"

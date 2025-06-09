@@ -1,9 +1,11 @@
 'use client'
 
-import { useState } from "react"
 import { Card } from "./ui/card"
 import Link from "next/link"
-// ... 나머지 imports
+import Image from "next/image"
+import { Badge } from "./ui/badge"
+import { Button } from "./ui/button"
+import { Download, Eye, Heart, Share2, Star } from "lucide-react"
 
 export function ProductListItem({ product }: { product: any }) {
   // ... 기존 ProductListItem 코드

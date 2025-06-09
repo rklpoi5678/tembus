@@ -64,6 +64,7 @@ export function AddToCart({ product }: AddToCartProps) {
         })
       }
     } catch (error) {
+      console.error("장바구니 추가 중 오류가 발생했습니다.", error)
       toast({
         title: "오류",
         description: "장바구니 추가 중 오류가 발생했습니다.",
@@ -107,6 +108,7 @@ export function AddToCart({ product }: AddToCartProps) {
         })
       }
     } catch (error) {
+      console.error("위시리스트 추가 중 오류가 발생했습니다.", error)
       toast({
         title: "오류",
         description: "위시리스트 추가 중 오류가 발생했습니다.",

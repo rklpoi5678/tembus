@@ -28,9 +28,7 @@ import {
   Menu,
   X,
   LogOut,
-  User,
   Bell,
-  ChevronDown,
   Zap,
   Tickets,
 } from "lucide-react"

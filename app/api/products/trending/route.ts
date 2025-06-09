@@ -37,6 +37,7 @@ export async function GET() {
     
     return NextResponse.json(trendingProducts)
   } catch (error) {
+    console.error(error)
     return NextResponse.json(
       { error: 'Failed to fetch trending products' },
       { status: 500 }

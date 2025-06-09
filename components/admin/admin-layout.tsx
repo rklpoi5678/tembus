@@ -29,7 +29,7 @@ import {
   Bell,
   Search,
 } from "lucide-react"
-import { useAuth } from "@/lib/auth-context"
+import { useUser } from "@clerk/nextjs"
 import { Input } from "@/components/ui/input"
 
 const sidebarItems = [
@@ -77,7 +77,7 @@ interface AdminLayoutProps {
 export function AdminLayout({ children }: AdminLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const pathname = usePathname()
-  const { user, logout } = useAuth()
+  const { user, isSignedIn } = useUser()
 
   return (
     <div className="min-h-screen bg-gray-50 flex">

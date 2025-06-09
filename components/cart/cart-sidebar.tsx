@@ -60,6 +60,7 @@ export function CartSidebar({ children }: CartSidebarProps) {
         setCartItems((items) => items.map((item) => (item.id === itemId ? { ...item, quantity } : item)))
       }
     } catch (error) {
+      console.error("Failed to update quantity:", error)
       toast({
         title: "Error",
         description: "Failed to update quantity",
@@ -82,6 +83,7 @@ export function CartSidebar({ children }: CartSidebarProps) {
         })
       }
     } catch (error) {
+      console.error("Failed to remove item:", error)
       toast({
         title: "Error",
         description: "Failed to remove item",
@@ -104,6 +106,7 @@ export function CartSidebar({ children }: CartSidebarProps) {
         })
       }
     } catch (error) {
+      console.error("Failed to clear cart:", error)
       toast({
         title: "Error",
         description: "Failed to clear cart",

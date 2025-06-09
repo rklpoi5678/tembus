@@ -1,6 +1,6 @@
 "use client"
 
-import { Shield, Cookie, User, Database, Mail, Phone } from "lucide-react"
+import { Shield, Cookie, User, Database, Mail } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function PrivacyPolicyPage() {

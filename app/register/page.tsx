@@ -70,6 +70,7 @@ export default function RegisterPage() {
       }
     } catch (error) {
       setError("회원가입 중 오류가 발생했습니다.")
+      console.error(error)
     } finally {
       setIsLoading(false)
     }

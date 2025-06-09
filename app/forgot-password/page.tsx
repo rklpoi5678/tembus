@@ -40,6 +40,7 @@ export default function ForgotPasswordPage() {
       }
     } catch (error) {
       setError("비밀번호 재설정 요청 중 오류가 발생했습니다.")
+      console.error(error)
     } finally {
       setIsLoading(false)
     }

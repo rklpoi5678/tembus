@@ -85,6 +85,7 @@ export default function AdminProducts() {
         description: "Failed to delete product",
         variant: "destructive",
       })
+      console.error("Failed to delete product:", error)
     }
     setDeleteProduct(null)
   }

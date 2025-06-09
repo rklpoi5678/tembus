@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ScrollText, Zap, User } from "lucide-react"
+import { ScrollText } from "lucide-react"
 import Link from "next/link"
-import { CartIcon } from "@/components/cart-icon"
 
 export default function TermsPage() {
   return (
@@ -48,7 +47,7 @@ export default function TermsPage() {
             </CardHeader>
             <CardContent className="prose max-w-none">
               <p>
-                이 약관은 디지털마켓(이하 "회사")이 제공하는 디지털 상품 거래 서비스(이하 "서비스")의 이용과 관련하여
+                이 약관은 디지털마켓(이하 &quot;회사&quot;)이 제공하는 디지털 상품 거래 서비스(이하 &quot;서비스&quot;)의 이용과 관련하여
                 회사와 이용자 간의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.
               </p>
             </CardContent>
@@ -61,14 +60,14 @@ export default function TermsPage() {
             <CardContent className="prose max-w-none">
               <p>이 약관에서 사용하는 용어의 정의는 다음과 같습니다:</p>
               <ol className="list-decimal pl-6 space-y-2">
-                <li>"서비스"란 회사가 제공하는 디지털 상품 거래 플랫폼을 의미합니다.</li>
-                <li>"이용자"란 이 약관에 따라 회사가 제공하는 서비스를 받는 회원 및 비회원을 말합니다.</li>
+                <li>&quot;서비스&quot;란 회사가 제공하는 디지털 상품 거래 플랫폼을 의미합니다.</li>
+                <li>&quot;이용자&quot;란 이 약관에 따라 회사가 제공하는 서비스를 받는 회원 및 비회원을 말합니다.</li>
                 <li>
-                  "회원"이란 회사에 개인정보를 제공하여 회원등록을 한 자로서, 회사의 정보를 지속적으로 제공받으며 회사가
+                  &quot;회원&quot;이란 회사에 개인정보를 제공하여 회원등록을 한 자로서, 회사의 정보를 지속적으로 제공받으며 회사가
                   제공하는 서비스를 계속적으로 이용할 수 있는 자를 말합니다.
                 </li>
                 <li>
-                  "디지털 상품"이란 게임 아이템, 소프트웨어, 디지털 음원, 모바일 앱 등 디지털 형태로 제공되는 상품을
+                  &quot;디지털 상품&quot;이란 게임 아이템, 소프트웨어, 디지털 음원, 모바일 앱 등 디지털 형태로 제공되는 상품을
                   말합니다.
                 </li>
               </ol>
@@ -81,7 +80,7 @@ export default function TermsPage() {
             </CardHeader>
             <CardContent className="prose max-w-none">
               <ol className="list-decimal pl-6 space-y-2">
-                <li>이 약관은 ��비스 화면에 게시하거나 기타의 방법으로 이용자에게 공지함으로써 효력을 발생합니다.</li>
+                <li>이 약관은 &quot;서비스&quot; 화면에 게시하거나 기타의 방법으로 이용자에게 공지함으로써 효력을 발생합니다.</li>
                 <li>
                   회사는 필요하다고 인정되는 경우 이 약관을 변경할 수 있으며, 변경된 약관은 제1항과 같은 방법으로 공지
                   또는 통지함으로써 효력을 발생합니다.
@@ -263,7 +262,7 @@ export default function TermsPage() {
       <footer className="bg-background border-t py-12">
         <div className="container">
           <div className="text-center text-muted-foreground">
-            <p>&copy; 2024 디지털마켓. All rights reserved.</p>
+            <p>&copy; 2025 자유템. All rights reserved.</p>
           </div>
         </div>
       </footer>

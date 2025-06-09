@@ -13,7 +13,7 @@ import Link from "next/link"
 
 export default function SellerTeamPage() {
   const [inviteEmail, setInviteEmail] = useState("")
-  const [team, setTeam] = useState([
+  const [team] = useState([
     { id: 1, name: "홍길동", email: "hong@tembus.com", role: "관리자" },
     { id: 2, name: "김영희", email: "kim@tembus.com", role: "멤버" },
   ])

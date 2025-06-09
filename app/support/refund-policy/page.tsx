@@ -1,9 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { RefreshCw, Clock, Shield, AlertTriangle, Zap, User } from "lucide-react"
+import { RefreshCw, Clock, Shield, AlertTriangle } from "lucide-react"
 import Link from "next/link"
-import { CartIcon } from "@/components/cart-icon"
 
 export default function RefundPolicyPage() {
   return (

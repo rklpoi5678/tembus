@@ -139,7 +139,7 @@ export default function AdminSettingsPage() {
   const [settings, setSettings] = useState<PlatformSettings>(defaultSettings)
   const [isLoading, setIsLoading] = useState(false)
 
-  const updateSetting = (section: keyof PlatformSettings, field: string, value: any) => {
+  const updateSetting = (section: keyof PlatformSettings, field: string, value: string | boolean | number) => {
     setSettings(prev => ({
       ...prev,
       [section]: {
@@ -166,6 +166,7 @@ export default function AdminSettingsPage() {
         description: "나중에 다시 시도해주세요.",
         variant: "destructive",
       })
+      console.error("Failed to save settings:", error)
     } finally {
       setIsLoading(false)
     }

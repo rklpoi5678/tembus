@@ -29,7 +29,6 @@ import {
   DollarSign,
   Settings,
   Globe,
-  BanknoteIcon,
   Banknote,
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"

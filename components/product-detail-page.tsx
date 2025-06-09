@@ -22,10 +22,7 @@ import {
   Monitor,
   Smartphone,
   Tablet,
-  Zap,
-  User,
 } from "lucide-react"
-import { CartIcon } from "@/components/cart-icon"
 import { AddToCart } from "@/components/add-to-cart"
 
 interface ProductImage {
