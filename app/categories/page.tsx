@@ -52,7 +52,6 @@ export default function CategoriesPage() {
 
   return (
     <div className="container mx-auto px-4">
-      <Header />
       {/* Header */}
       <div className="text-center mt-12 mb-12">
         <h1 className="text-4xl font-bold mb-4">카테고리 둘러보기</h1>

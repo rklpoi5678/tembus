@@ -5,7 +5,8 @@ import { Menu, Search, Store, Package, Settings, LogOut, User, Zap } from "lucid
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { CartIcon } from "@/components/cart-icon"
-import { useAuth } from "@/lib/auth-context"
+// import { useAuth } from "@/lib/auth-context"
+import { useUser, useAuth, SignInButton, SignUpButton, SignOutButton } from "@clerk/nextjs" // Import from Clerk
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,10 +15,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useRouter } from "next/navigation"
 
 export function Header() {
-  const { user, loading, logout } = useAuth()
+  // Clerk's useUser hook provides the authenticated user object and its loading state
+  const { isSignedIn, user, isLoaded } = useUser();
+  // Clerk's useAuth hook provides session management functions like signOut
+  const { signOut } = useAuth();
+  const router = useRouter(); // For navigating after logout
 
+  // Instead of your custom `loading`, Clerk provides `isLoaded` for `useUser`
+  // `isLoaded` is true when Clerk has finished attempting to load the user (either signed in or out)
+
+  const handleLogout = async () => {
+    await signOut(); // Clerk's signOut function
+    router.push('/'); // Redirect to home or login page after logout
+  };
+  
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
@@ -49,56 +63,72 @@ export function Header() {
             </div>
           </div>
           <CartIcon />
-          {!loading && (
+
+          {/* Clerk's way of handling signed in/out states */}
+          {!isLoaded ? ( // Show nothing or a loading spinner until Clerk is loaded
+            <div>로딩 중...</div>
+          ) : (
             <>
-              {user ? (
+              {isSignedIn ? ( // If the user is signed in
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon">
                       <User className="h-5 w-5" />
                     </Button>
                   </DropdownMenuTrigger>
-                  {/* 유저 초기 가입시 customer 룰 자기 스토어 생성시 -> seller 권한으로 바로 전환  */}
                   <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
+                    {/* Clerk's user object has different properties, check Clerk docs for exact names */}
+                    {/* user.fullName or user.emailAddresses[0].emailAddress */}
+                    <DropdownMenuLabel>{user?.fullName || user?.emailAddresses?.[0]?.emailAddress}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    {(user.role === "seller" || user.role === "admin") && (
+                    {/* You'll need to get the role information from Clerk's user metadata or publicMetadata */}
+                    {/* Assuming you store role in publicMetadata */}
+                    {(user?.publicMetadata?.role === "seller" || user?.publicMetadata?.role === "admin") && (
                       <>
                         <DropdownMenuItem asChild>
                           <Link href="/seller">
-                            <Store className="mr-2 h-4 w-4" />
-                            내 상점
+                            <span className="flex items-center"> {/* Add flex for alignment if needed */}
+                              <Store className="mr-2 h-4 w-4" />
+                              내 상점
+                            </span>
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                           <Link href="/seller/products">
-                            <Package className="mr-2 h-4 w-4" />
-                            상품 관리
+                            <span className="flex items-center"> {/* Add flex for alignment if needed */}
+                              <Package className="mr-2 h-4 w-4" />
+                              상품 관리
+                            </span>
                           </Link>
                         </DropdownMenuItem>
                       </>
                     )}
                     <DropdownMenuItem asChild>
                       <Link href="/settings">
-                        <Settings className="mr-2 h-4 w-4" />
-                        설정
+                        <span className="flex items-center"> {/* Add flex for alignment if needed */}
+                          <Settings className="mr-2 h-4 w-4" />
+                          설정
+                        </span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={logout}>
+                    <DropdownMenuItem onClick={handleLogout}> {/* Use your handleLogout function */}
                       <LogOut className="mr-2 h-4 w-4" />
-                      로그아웃
+                      <SignOutButton>
+                        로그아웃
+                      </SignOutButton>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-              ) : (
+              ) : ( // If the user is signed out
                 <div className="flex items-center gap-2">
-                  <Button variant="ghost" asChild>
-                    <Link href="/login">로그인</Link>
-                  </Button>
-                  <Button asChild>
-                    <Link href="/register">판매시작 하기</Link>
-                  </Button>
+                  {/* Clerk's built-in components for sign-in/sign-up */}
+                  <SignInButton mode="modal" >
+                    <Button>로그인</Button>
+                  </SignInButton>
+                  <SignUpButton mode="modal">
+                    <Button className="bg-secondary text-secondary-foreground">회원가입</Button>
+                  </SignUpButton>
                 </div>
               )}
             </>

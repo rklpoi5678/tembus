@@ -23,6 +23,18 @@ import { Decimal } from "@prisma/client/runtime/library"
     wishlists?: any[]
   }
 
+  export interface UserSession {
+    id: number
+    user_id: string
+    session_token: string
+    expires_at: Date
+    created_at: Date
+    updated_at: Date
+
+    // Relations
+    user?: User
+  }
+
   export interface Seller {
     id: string
     user_id: string

@@ -50,7 +50,7 @@ export default function SellerProducts() {
   const filteredProducts = products.filter(
     (product) =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.category.toLowerCase().includes(searchQuery.toLowerCase()),
+      product.categories?.name.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
   const getStatusColor = (status: string) => {
@@ -151,7 +151,7 @@ export default function SellerProducts() {
                 <CardContent className="p-0">
                   <div className="relative">
                     <Image
-                      src={product.images[0]?.url || "/placeholder.svg?height=200&width=300"}
+                      src={product.product_images[0]?.image_url || "/placeholder.svg?height=200&width=300"}
                       alt={product.name}
                       width={300}
                       height={200}
@@ -203,17 +203,17 @@ export default function SellerProducts() {
 
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-2xl font-bold text-gray-900 dark:text-white">${product.price}</p>
+                        <p className="text-2xl font-bold text-gray-900 dark:text-white">${Number(product.price).toFixed(0)}</p>
                         <Badge variant="secondary" className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                          {product.category}
+                          {product.categories?.name}
                         </Badge>
                       </div>
                       <div className="text-right">
                         <div className="flex items-center gap-1 text-green-600 dark:text-green-400 text-sm">
                           <TrendingUp className="h-4 w-4" />
-                          {product.salesCount} 판매
+                          {product.sales_count} 판매
                         </div>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm">{product.inventory} 재고</p>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm">{product.stock_quantity} 재고</p>
                       </div>
                     </div>
                   </div>
@@ -236,7 +236,7 @@ export default function SellerProducts() {
           <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-200">
             <CardContent className="p-6">
               <div className="text-center">
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">{products.filter((p) => p.status === "active").length}</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">{products.filter((p) => p.status === "published").length}</p>
                 <p className="text-gray-600 dark:text-gray-400 text-sm">활성 상품</p>
               </div>
             </CardContent>
@@ -244,7 +244,7 @@ export default function SellerProducts() {
           <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-200">
             <CardContent className="p-6">
               <div className="text-center">
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">{products.reduce((sum, p) => sum + p.salesCount, 0)}</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">{products.reduce((sum, p) => sum + p.sales_count, 0)}</p>
                 <p className="text-gray-600 dark:text-gray-400 text-sm">총 판매량</p>
               </div>
             </CardContent>
@@ -253,7 +253,7 @@ export default function SellerProducts() {
             <CardContent className="p-6">
               <div className="text-center">
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                  ${products.reduce((sum, p) => sum + p.price * p.salesCount, 0).toLocaleString()}
+                  ${products.reduce((sum, p) => sum + Number(p.price) * p.sales_count, 0).toLocaleString()}
                 </p>
                 <p className="text-gray-600 dark:text-gray-400 text-sm">총 수익</p>
               </div>

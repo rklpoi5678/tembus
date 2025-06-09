@@ -76,17 +76,12 @@ export function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/company/careers" className="hover:text-primary">
-                                    채용정보
-                                </Link>
-                            </li>
-                            <li>
                                 <Link href="/company/partnership" className="hover:text-primary">
                                     파트너십
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/company/privacy" className="hover:text-primary">
+                                <Link href="/company/privacy-policy" className="hover:text-primary">
                                     개인정보처리방침
                                 </Link>
                             </li>

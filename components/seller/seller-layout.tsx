@@ -120,10 +120,7 @@ export function SellerLayout({ children }: SellerLayoutProps) {
             </div>
 
             <div className="flex items-center gap-3">
-              <Button variant="ghost" size="sm" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
-                간단히 보기
-                <ChevronDown className="ml-2 h-4 w-4" />
-              </Button>
+                {user?.seller?.storeName}님
 
               <Button variant="ghost" size="icon" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
                 <Bell className="h-5 w-5" />
@@ -143,16 +140,10 @@ export function SellerLayout({ children }: SellerLayoutProps) {
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm font-medium leading-none text-gray-900 dark:text-white">{user?.name}</p>
                       <p className="text-xs leading-none text-gray-500 dark:text-gray-400">{user?.email}</p>
-                      {user?.storeName && <p className="text-xs leading-none text-gray-500 dark:text-gray-400">{user.storeName}</p>}
+                      {user?.seller?.storeName && <p className="text-xs leading-none text-gray-500 dark:text-gray-400">{user.seller.storeName}</p>}
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator className="bg-gray-200 dark:bg-gray-700" />
-                  <DropdownMenuItem asChild className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <Link href="/seller/profile">
-                      <User className="mr-2 h-4 w-4" />
-                      프로필
-                    </Link>
-                  </DropdownMenuItem>
                   <DropdownMenuItem asChild className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <Link href="/seller/settings">
                       <Settings className="mr-2 h-4 w-4" />

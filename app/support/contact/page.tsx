@@ -43,25 +43,6 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-6">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <Zap className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <span className="font-bold text-xl">디지털마켓</span>
-            </Link>
-          </div>
-          <div className="flex items-center gap-4">
-            <CartIcon />
-            <Button variant="ghost" size="icon">
-              <User className="h-5 w-5" />
-            </Button>
-          </div>
-        </div>
-      </header>
 
       {/* Breadcrumb */}
       <div className="container py-4">

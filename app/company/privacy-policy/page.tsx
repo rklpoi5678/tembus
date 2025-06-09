@@ -69,7 +69,7 @@ export default function PrivacyPolicyPage() {
         {/* 마지막 업데이트 */}
         <div className="text-center mb-12 animate-fade-in-delay">
           <p className="text-sm text-gray-500">
-            마지막 업데이트: 2024년 1월 15일
+            마지막 업데이트: 2025년 6월 9일
           </p>
         </div>
 
@@ -107,11 +107,7 @@ export default function PrivacyPolicyPage() {
           <div className="flex flex-col md:flex-row justify-center items-center gap-6">
             <div className="flex items-center gap-2">
               <Mail className="h-5 w-5 text-primary" />
-              <span className="text-gray-700">privacy@digitalmarket.com</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Phone className="h-5 w-5 text-primary" />
-              <span className="text-gray-700">02-1234-5678</span>
+              <span className="text-gray-700">meta-os@zohomail.com</span>
             </div>
           </div>
         </div>

@@ -145,9 +145,6 @@ export default function SellerDashboard() {
         <div>
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">시작하기</h2>
-            <Button variant="ghost" size="sm" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
-              간단히 보기
-            </Button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

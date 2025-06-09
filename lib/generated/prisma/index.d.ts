@@ -494,8 +494,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.8.2
-   * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
+   * Prisma Client JS version: 6.9.0
+   * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
    */
   export type PrismaVersion = {
     client: string
@@ -14666,11 +14666,11 @@ export namespace Prisma {
 
   export type User_sessionsGroupByOutputType = {
     id: number
-    user_id: string | null
+    user_id: string
     session_token: string
     expires_at: Date
-    created_at: Date | null
-    updated_at: Date | null
+    created_at: Date
+    updated_at: Date
     _count: User_sessionsCountAggregateOutputType | null
     _avg: User_sessionsAvgAggregateOutputType | null
     _sum: User_sessionsSumAggregateOutputType | null
@@ -14749,11 +14749,11 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      user_id: string | null
+      user_id: string
       session_token: string
       expires_at: Date
-      created_at: Date | null
-      updated_at: Date | null
+      created_at: Date
+      updated_at: Date
     }, ExtArgs["result"]["user_sessions"]>
     composites: {}
   }
@@ -20583,21 +20583,21 @@ export namespace Prisma {
     OR?: user_sessionsWhereInput[]
     NOT?: user_sessionsWhereInput | user_sessionsWhereInput[]
     id?: IntFilter<"user_sessions"> | number
-    user_id?: UuidNullableFilter<"user_sessions"> | string | null
+    user_id?: UuidFilter<"user_sessions"> | string
     session_token?: StringFilter<"user_sessions"> | string
     expires_at?: DateTimeFilter<"user_sessions"> | Date | string
-    created_at?: DateTimeNullableFilter<"user_sessions"> | Date | string | null
-    updated_at?: DateTimeNullableFilter<"user_sessions"> | Date | string | null
+    created_at?: DateTimeFilter<"user_sessions"> | Date | string
+    updated_at?: DateTimeFilter<"user_sessions"> | Date | string
     user?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
   }
 
   export type user_sessionsOrderByWithRelationInput = {
     id?: SortOrder
-    user_id?: SortOrderInput | SortOrder
+    user_id?: SortOrder
     session_token?: SortOrder
     expires_at?: SortOrder
-    created_at?: SortOrderInput | SortOrder
-    updated_at?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
     user?: usersOrderByWithRelationInput
   }
 
@@ -20607,20 +20607,20 @@ export namespace Prisma {
     AND?: user_sessionsWhereInput | user_sessionsWhereInput[]
     OR?: user_sessionsWhereInput[]
     NOT?: user_sessionsWhereInput | user_sessionsWhereInput[]
-    user_id?: UuidNullableFilter<"user_sessions"> | string | null
+    user_id?: UuidFilter<"user_sessions"> | string
     expires_at?: DateTimeFilter<"user_sessions"> | Date | string
-    created_at?: DateTimeNullableFilter<"user_sessions"> | Date | string | null
-    updated_at?: DateTimeNullableFilter<"user_sessions"> | Date | string | null
+    created_at?: DateTimeFilter<"user_sessions"> | Date | string
+    updated_at?: DateTimeFilter<"user_sessions"> | Date | string
     user?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
   }, "id" | "session_token">
 
   export type user_sessionsOrderByWithAggregationInput = {
     id?: SortOrder
-    user_id?: SortOrderInput | SortOrder
+    user_id?: SortOrder
     session_token?: SortOrder
     expires_at?: SortOrder
-    created_at?: SortOrderInput | SortOrder
-    updated_at?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
     _count?: user_sessionsCountOrderByAggregateInput
     _avg?: user_sessionsAvgOrderByAggregateInput
     _max?: user_sessionsMaxOrderByAggregateInput
@@ -20633,11 +20633,11 @@ export namespace Prisma {
     OR?: user_sessionsScalarWhereWithAggregatesInput[]
     NOT?: user_sessionsScalarWhereWithAggregatesInput | user_sessionsScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"user_sessions"> | number
-    user_id?: UuidNullableWithAggregatesFilter<"user_sessions"> | string | null
+    user_id?: UuidWithAggregatesFilter<"user_sessions"> | string
     session_token?: StringWithAggregatesFilter<"user_sessions"> | string
     expires_at?: DateTimeWithAggregatesFilter<"user_sessions"> | Date | string
-    created_at?: DateTimeNullableWithAggregatesFilter<"user_sessions"> | Date | string | null
-    updated_at?: DateTimeNullableWithAggregatesFilter<"user_sessions"> | Date | string | null
+    created_at?: DateTimeWithAggregatesFilter<"user_sessions"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"user_sessions"> | Date | string
   }
 
   export type usersWhereInput = {
@@ -21863,61 +21863,61 @@ export namespace Prisma {
 
   export type user_sessionsCreateInput = {
     session_token: string
-    expires_at: Date | string
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
+    expires_at?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
     user?: usersCreateNestedOneWithoutSessionsInput
   }
 
   export type user_sessionsUncheckedCreateInput = {
     id?: number
-    user_id?: string | null
+    user_id: string
     session_token: string
-    expires_at: Date | string
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
+    expires_at?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type user_sessionsUpdateInput = {
     session_token?: StringFieldUpdateOperationsInput | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: usersUpdateOneWithoutSessionsNestedInput
   }
 
   export type user_sessionsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    user_id?: StringFieldUpdateOperationsInput | string
     session_token?: StringFieldUpdateOperationsInput | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type user_sessionsCreateManyInput = {
     id?: number
-    user_id?: string | null
+    user_id: string
     session_token: string
-    expires_at: Date | string
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
+    expires_at?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type user_sessionsUpdateManyMutationInput = {
     session_token?: StringFieldUpdateOperationsInput | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type user_sessionsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    user_id?: StringFieldUpdateOperationsInput | string
     session_token?: StringFieldUpdateOperationsInput | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type usersCreateInput = {
@@ -27219,17 +27219,17 @@ export namespace Prisma {
 
   export type user_sessionsCreateWithoutUserInput = {
     session_token: string
-    expires_at: Date | string
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
+    expires_at?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type user_sessionsUncheckedCreateWithoutUserInput = {
     id?: number
     session_token: string
-    expires_at: Date | string
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
+    expires_at?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type user_sessionsCreateOrConnectWithoutUserInput = {
@@ -27463,11 +27463,11 @@ export namespace Prisma {
     OR?: user_sessionsScalarWhereInput[]
     NOT?: user_sessionsScalarWhereInput | user_sessionsScalarWhereInput[]
     id?: IntFilter<"user_sessions"> | number
-    user_id?: UuidNullableFilter<"user_sessions"> | string | null
+    user_id?: UuidFilter<"user_sessions"> | string
     session_token?: StringFilter<"user_sessions"> | string
     expires_at?: DateTimeFilter<"user_sessions"> | Date | string
-    created_at?: DateTimeNullableFilter<"user_sessions"> | Date | string | null
-    updated_at?: DateTimeNullableFilter<"user_sessions"> | Date | string | null
+    created_at?: DateTimeFilter<"user_sessions"> | Date | string
+    updated_at?: DateTimeFilter<"user_sessions"> | Date | string
   }
 
   export type cart_itemsUpsertWithWhereUniqueWithoutUsersInput = {
@@ -28482,9 +28482,9 @@ export namespace Prisma {
   export type user_sessionsCreateManyUserInput = {
     id?: number
     session_token: string
-    expires_at: Date | string
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
+    expires_at?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type cart_itemsCreateManyUsersInput = {
@@ -28534,24 +28534,24 @@ export namespace Prisma {
   export type user_sessionsUpdateWithoutUserInput = {
     session_token?: StringFieldUpdateOperationsInput | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type user_sessionsUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     session_token?: StringFieldUpdateOperationsInput | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type user_sessionsUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     session_token?: StringFieldUpdateOperationsInput | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type cart_itemsUpdateWithoutUsersInput = {

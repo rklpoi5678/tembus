@@ -138,47 +138,28 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-6">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <Zap className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <span className="font-bold text-xl">디지털마켓</span>
-            </Link>
-          </div>
-          <div className="flex items-center gap-4">
-            <CartIcon />
-            <Button variant="ghost" size="icon">
-              <User className="h-5 w-5" />
-            </Button>
-          </div>
-        </div>
-      </header>
 
       {/* Breadcrumb */}
-      <div className="container py-4">
-        <nav className="text-sm text-muted-foreground">
-          <Link href="/" className="hover:text-primary">
+      <div className="container py-6 px-8">
+        <nav className="text-sm text-gray-600">
+          <Link href="/" className="hover:text-blue-500">
             홈
           </Link>
           {" / "}
-          <Link href={`/categories/${product.category.toLowerCase()}`} className="hover:text-primary">
+          <Link href={`/categories/${product.category.toLowerCase()}`} className="hover:text-blue-500">
             {product.category}
           </Link>
           {" / "}
-          <span className="text-foreground">{product.name}</span>
+          <span className="text-gray-800">{product.name}</span>
         </nav>
       </div>
 
-      <div className="container pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+      <div className="container pb-16 px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           {/* Product Images */}
-          <div className="space-y-4">
+          <div className="space-y-5">
             {/* Main Image */}
-            <div className="relative aspect-square bg-muted rounded-lg overflow-hidden group">
+            <div className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden group">
               {product.images[currentImageIndex]?.type === "video" ? (
                 <video
                   src={product.images[currentImageIndex].url}
@@ -231,7 +212,7 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
                   <button
                     key={index}
                     className={`relative aspect-square rounded-md overflow-hidden border-2 transition-colors ${
-                      index === currentImageIndex ? "border-primary" : "border-transparent"
+                      index === currentImageIndex ? "border-blue-500" : "border-transparent"
                     }`}
                     onClick={() => setCurrentImageIndex(index)}
                   >
@@ -253,42 +234,42 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
           </div>
 
           {/* Product Information */}
-          <div className="space-y-6">
+          <div className="space-y-8">
             {/* Title and Rating */}
             <div>
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-3 mb-3">
                 <Badge variant="secondary">{product.category}</Badge>
                 {product.platforms && (
                   <div className="flex gap-1">
-                    {product.platforms.includes("iOS") && <Smartphone className="h-4 w-4 text-muted-foreground" />}
-                    {product.platforms.includes("Android") && <Tablet className="h-4 w-4 text-muted-foreground" />}
-                    {product.platforms.includes("Windows") && <Monitor className="h-4 w-4 text-muted-foreground" />}
+                    {product.platforms.includes("iOS") && <Smartphone className="h-4 w-4 text-gray-600" />}
+                    {product.platforms.includes("Android") && <Tablet className="h-4 w-4 text-gray-600" />}
+                    {product.platforms.includes("Windows") && <Monitor className="h-4 w-4 text-gray-600" />}
                   </div>
                 )}
               </div>
-              <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
+              <h1 className="text-3xl font-bold mb-6">{product.name}</h1>
 
               {/* Rating */}
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center gap-3 mb-5">
                 {renderStars(product.rating, "w-5 h-5")}
                 <span className="font-semibold">{product.rating}</span>
-                <span className="text-muted-foreground">({product.reviewCount}개 리뷰)</span>
+                <span className="text-gray-600">({product.reviewCount}개 리뷰)</span>
               </div>
             </div>
 
             {/* Price */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-3">
-                <span className="text-3xl font-bold text-primary">{product.price}</span>
+            <div className="space-y-3">
+              <div className="flex items-center gap-4">
+                <span className="text-3xl font-bold text-blue-500">{product.price}</span>
                 {product.originalPrice && product.originalPrice !== product.price && (
                   <>
-                    <span className="text-xl text-muted-foreground line-through">{product.originalPrice}</span>
+                    <span className="text-xl text-gray-600 line-through">{product.originalPrice}</span>
                     {discountPercentage > 0 && <Badge variant="destructive">{discountPercentage}% 할인</Badge>}
                   </>
                 )}
               </div>
               {product.originalPrice && product.originalPrice !== product.price && (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-gray-600">
                   {(
                     Number.parseFloat(product.originalPrice.replace(/[^0-9]/g, "")) -
                     Number.parseFloat(product.price.replace(/[^0-9]/g, ""))
@@ -299,40 +280,40 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
             </div>
 
             {/* Quick Info */}
-            <div className="grid grid-cols-2 gap-4 p-4 bg-muted/50 rounded-lg">
+            <div className="grid grid-cols-2 gap-5 p-4 bg-gray-50 rounded-lg">
               {product.developer && (
                 <div>
-                  <p className="text-sm text-muted-foreground">개발사</p>
+                  <p className="text-sm text-gray-600">개발사</p>
                   <p className="font-medium">{product.developer}</p>
                 </div>
               )}
               {product.version && (
                 <div>
-                  <p className="text-sm text-muted-foreground">버전</p>
+                  <p className="text-sm text-gray-600">버전</p>
                   <p className="font-medium">{product.version}</p>
                 </div>
               )}
               {product.downloadSize && (
                 <div>
-                  <p className="text-sm text-muted-foreground">용량</p>
+                  <p className="text-sm text-gray-600">용량</p>
                   <p className="font-medium">{product.downloadSize}</p>
                 </div>
               )}
               {product.releaseDate && (
                 <div>
-                  <p className="text-sm text-muted-foreground">출시일</p>
+                  <p className="text-sm text-gray-600">출시일</p>
                   <p className="font-medium">{product.releaseDate}</p>
                 </div>
               )}
               {product.trackCount && (
                 <div>
-                  <p className="text-sm text-muted-foreground">트랙 수</p>
+                  <p className="text-sm text-gray-600">트랙 수</p>
                   <p className="font-medium">{product.trackCount}곡</p>
                 </div>
               )}
               {product.duration && (
                 <div>
-                  <p className="text-sm text-muted-foreground">재생시간</p>
+                  <p className="text-sm text-gray-600">재생시간</p>
                   <p className="font-medium">{product.duration}</p>
                 </div>
               )}
@@ -341,7 +322,7 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
             {/* Languages */}
             {product.languages && (
               <div>
-                <p className="text-sm text-muted-foreground mb-2">지원 언어</p>
+                <p className="text-sm text-gray-600 mb-2">지원 언어</p>
                 <div className="flex flex-wrap gap-2">
                   {product.languages.map((lang, index) => (
                     <Badge key={index} variant="outline">
@@ -355,7 +336,7 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
             {/* Format */}
             {product.format && (
               <div>
-                <p className="text-sm text-muted-foreground mb-2">지원 포맷</p>
+                <p className="text-sm text-gray-600 mb-2">지원 포맷</p>
                 <div className="flex flex-wrap gap-2">
                   {product.format.map((fmt, index) => (
                     <Badge key={index} variant="outline">
@@ -367,7 +348,7 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
             )}
 
             {/* Action Buttons */}
-            <div className="flex gap-3">
+            <div className="flex gap-4">
               <Button
                 variant="outline"
                 size="icon"
@@ -396,19 +377,19 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
               <CardContent className="p-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="flex items-center gap-2">
-                    <Download className="h-5 w-5 text-primary" />
+                    <Download className="h-5 w-5 text-blue-500" />
                     <span className="text-sm">즉시 다운로드</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Shield className="h-5 w-5 text-primary" />
+                    <Shield className="h-5 w-5 text-blue-500" />
                     <span className="text-sm">안전한 거래</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Truck className="h-5 w-5 text-primary" />
+                    <Truck className="h-5 w-5 text-blue-500" />
                     <span className="text-sm">24시간 지원</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <RefreshCw className="h-5 w-5 text-primary" />
+                    <RefreshCw className="h-5 w-5 text-blue-500" />
                     <span className="text-sm">환불 보장</span>
                   </div>
                 </div>
@@ -418,7 +399,7 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
         </div>
 
         {/* Product Details Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-12">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-16">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="description">상품설명</TabsTrigger>
             <TabsTrigger value="specifications">사양</TabsTrigger>
@@ -426,14 +407,14 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
             <TabsTrigger value="qa">Q&A</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="description" className="mt-6">
+          <TabsContent value="description" className="mt-8">
             <Card>
               <CardHeader>
                 <CardTitle>상품 설명</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="prose max-w-none">
-                  <p className="text-lg text-muted-foreground mb-6">{product.description}</p>
+                  <p className="text-lg text-gray-600 mb-6">{product.description}</p>
                   <div className="space-y-4">
                     {product.longDescription.split("\n").map((paragraph, index) => (
                       <p key={index}>{paragraph}</p>
@@ -447,7 +428,7 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
                     <ul className="space-y-2">
                       {product.features.map((feature, index) => (
                         <li key={index} className="flex items-start gap-2">
-                          <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                          <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
                           <span>{feature}</span>
                         </li>
                       ))}
@@ -458,7 +439,7 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
             </Card>
           </TabsContent>
 
-          <TabsContent value="specifications" className="mt-6">
+          <TabsContent value="specifications" className="mt-8">
             <Card>
               <CardHeader>
                 <CardTitle>상품 사양</CardTitle>
@@ -470,8 +451,8 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
                       <h3 className="font-semibold mb-4">기본 사양</h3>
                       <div className="space-y-3">
                         {product.specifications.map((spec, index) => (
-                          <div key={index} className="flex justify-between py-2 border-b border-muted">
-                            <span className="text-muted-foreground">{spec.label}</span>
+                          <div key={index} className="flex justify-between py-2 border-b border-gray-200">
+                            <span className="text-gray-600">{spec.label}</span>
                             <span className="font-medium">{spec.value}</span>
                           </div>
                         ))}
@@ -484,8 +465,8 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
                       <h3 className="font-semibold mb-4">시스템 요구사항</h3>
                       <div className="space-y-3">
                         {product.systemRequirements.map((req, index) => (
-                          <div key={index} className="flex justify-between py-2 border-b border-muted">
-                            <span className="text-muted-foreground">{req.label}</span>
+                          <div key={index} className="flex justify-between py-2 border-b border-gray-200">
+                            <span className="text-gray-600">{req.label}</span>
                             <span className="font-medium">{req.value}</span>
                           </div>
                         ))}
@@ -497,8 +478,8 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
             </Card>
           </TabsContent>
 
-          <TabsContent value="reviews" className="mt-6">
-            <div className="space-y-6">
+          <TabsContent value="reviews" className="mt-8">
+            <div className="space-y-8">
               {/* Review Summary */}
               <Card>
                 <CardHeader>
@@ -509,14 +490,14 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
                     <div className="text-center">
                       <div className="text-4xl font-bold mb-2">{product.rating}</div>
                       {renderStars(product.rating, "w-6 h-6")}
-                      <p className="text-muted-foreground mt-2">{product.reviewCount}개의 리뷰</p>
+                      <p className="text-gray-600 mt-2">{product.reviewCount}개의 리뷰</p>
                     </div>
                     <div className="space-y-2">
                       {ratingDistribution.map((item) => (
                         <div key={item.stars} className="flex items-center gap-2">
                           <span className="text-sm w-8">{item.stars}점</span>
                           <Progress value={item.percentage} className="flex-1" />
-                          <span className="text-sm text-muted-foreground w-12">{item.count}개</span>
+                          <span className="text-sm text-gray-600 w-12">{item.count}개</span>
                         </div>
                       ))}
                     </div>
@@ -541,14 +522,14 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
                           </div>
                           <div className="flex items-center gap-2">
                             {renderStars(review.rating)}
-                            <span className="text-sm text-muted-foreground">{review.date}</span>
+                            <span className="text-sm text-gray-600">{review.date}</span>
                           </div>
                         </div>
                       </div>
                       <CardTitle className="text-lg">{review.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-muted-foreground mb-4">{review.comment}</p>
+                      <p className="text-gray-600 mb-4">{review.comment}</p>
                       <Button variant="ghost" size="sm">
                         도움됨 ({review.helpful})
                       </Button>
@@ -559,7 +540,7 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
             </div>
           </TabsContent>
 
-          <TabsContent value="qa" className="mt-6">
+          <TabsContent value="qa" className="mt-8">
             <Card>
               <CardHeader>
                 <CardTitle>자주 묻는 질문</CardTitle>
@@ -568,20 +549,20 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
                 <div className="space-y-4">
                   <div className="p-4 border rounded-lg">
                     <h4 className="font-semibold mb-2">Q: 다운로드는 어떻게 하나요?</h4>
-                    <p className="text-muted-foreground">
+                    <p className="text-gray-600">
                       A: 구매 완료 후 마이페이지에서 다운로드 링크를 확인하실 수 있습니다.
                     </p>
                   </div>
                   <div className="p-4 border rounded-lg">
                     <h4 className="font-semibold mb-2">Q: 환불이 가능한가요?</h4>
-                    <p className="text-muted-foreground">
+                    <p className="text-gray-600">
                       A: 다운로드 전까지는 무조건 환불 가능하며, 다운로드 후에는 7일 이내 상품 하자 시에만 환불
                       가능합니다.
                     </p>
                   </div>
                   <div className="p-4 border rounded-lg">
                     <h4 className="font-semibold mb-2">Q: 여러 기기에서 사용할 수 있나요?</h4>
-                    <p className="text-muted-foreground">
+                    <p className="text-gray-600">
                       A: 라이선스 정책에 따라 다르며, 상품 설명에서 자세한 내용을 확인하실 수 있습니다.
                     </p>
                   </div>
@@ -593,7 +574,7 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
 
         {/* Related Products */}
         {relatedProducts && relatedProducts.length > 0 && (
-          <div className="space-y-6">
+          <div className="space-y-8">
             <h2 className="text-2xl font-bold">관련 상품</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {relatedProducts.map((relatedProduct) => (
@@ -612,7 +593,7 @@ export function ProductDetailPage({ product, reviews, relatedProducts }: Product
                   </CardHeader>
                   <CardContent className="p-4">
                     <Link href={`/products/${relatedProduct.id}`}>
-                      <h4 className="font-semibold line-clamp-2 hover:text-primary transition-colors mb-2">
+                      <h4 className="font-semibold line-clamp-2 hover:text-blue-500 transition-colors mb-2">
                         {relatedProduct.name}
                       </h4>
                     </Link>

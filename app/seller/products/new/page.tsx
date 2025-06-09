@@ -29,6 +29,8 @@ import {
   DollarSign,
   Settings,
   Globe,
+  BanknoteIcon,
+  Banknote,
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 
@@ -59,24 +61,24 @@ interface ProductFormData {
 }
 
 const categories = [
-  { value: "games", label: "Games", subcategories: ["PC Games", "Mobile Games", "Game Assets", "Game Mods"] },
-  { value: "software", label: "Software", subcategories: ["Productivity", "Design Tools", "Development", "Utilities"] },
-  { value: "music", label: "Music", subcategories: ["Beats", "Samples", "Full Tracks", "Sound Effects"] },
+  { value: "games", label: "게임", subcategories: ["PC 게임", "모바일 게임", "게임 에셋", "게임 모드"] },
+  { value: "software", label: "소프트웨어", subcategories: ["생산성", "디자인 도구", "개발", "유틸리티"] },
+  { value: "music", label: "음악", subcategories: ["비트", "샘플", "완성곡", "효과음"] },
   {
-    value: "mobile-apps",
-    label: "Mobile Apps",
-    subcategories: ["iOS Apps", "Android Apps", "App Templates", "UI Kits"],
+    value: "mobile-apps", 
+    label: "모바일 앱",
+    subcategories: ["iOS 앱", "안드로이드 앱", "앱 템플릿", "UI 키트"],
   },
-  { value: "design", label: "Design", subcategories: ["Graphics", "Templates", "Fonts", "Icons"] },
-  { value: "education", label: "Education", subcategories: ["Courses", "Ebooks", "Tutorials", "Worksheets"] },
+  { value: "design", label: "디자인", subcategories: ["그래픽", "템플릿", "폰트", "아이콘"] },
+  { value: "education", label: "교육", subcategories: ["강좌", "전자책", "튜토리얼", "워크시트"] },
 ]
 
 const steps = [
-  { id: "basic", title: "Basic Info", icon: FileText },
-  { id: "media", title: "Media & Files", icon: ImageIcon },
-  { id: "pricing", title: "Pricing", icon: DollarSign },
-  { id: "settings", title: "Settings", icon: Settings },
-  { id: "seo", title: "SEO & Publishing", icon: Globe },
+  { id: "basic", title: "기본 정보", icon: FileText },
+  { id: "media", title: "미디어 및 파일", icon: ImageIcon },
+  { id: "pricing", title: "가격", icon: DollarSign },
+  { id: "settings", title: "설정", icon: Settings },
+  { id: "seo", title: "SEO 및 출판", icon: Globe },
 ]
 
 export default function NewProductPage() {
@@ -225,41 +227,41 @@ export default function NewProductPage() {
   return (
     <SellerLayout>
       <div className="max-w-4xl mx-auto space-y-6">
-        {/* Header */}
+        {/* 헤더 섹션 */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-white">Create New Product</h1>
-            <p className="text-gray-400 mt-2">Add a new product to your store</p>
+            <h1 className="text-3xl font-bold text-gray-900">새 상품 등록</h1>
+            <p className="text-gray-600 mt-2">스토어에 새 상품을 추가하세요</p>
           </div>
           <Button variant="outline" onClick={() => router.back()}>
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back
+            뒤로가기
           </Button>
         </div>
 
-        {/* Progress */}
-        <Card className="bg-gray-800 border-gray-700">
+        {/* 진행 상태 표시 */}
+        <Card className="bg-white border border-gray-200 shadow-sm">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-medium text-gray-300">
-                Step {currentStep + 1} of {steps.length}
+              <span className="text-sm font-medium text-gray-700">
+                단계 {currentStep + 1} / {steps.length}
               </span>
-              <span className="text-sm text-gray-400">{Math.round(progress)}% Complete</span>
+              <span className="text-sm text-gray-600">{Math.round(progress)}% 완료</span>
             </div>
             <Progress value={progress} className="mb-4" />
             <div className="flex items-center justify-between">
               {steps.map((step, index) => (
                 <div
                   key={step.id}
-                  className={`flex items-center gap-2 ${index <= currentStep ? "text-pink-400" : "text-gray-500"}`}
+                  className={`flex items-center gap-2 ${index <= currentStep ? "text-blue-600" : "text-gray-400"}`}
                 >
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center ${
                       index < currentStep
-                        ? "bg-pink-500 text-white"
+                        ? "bg-blue-500 text-white"
                         : index === currentStep
-                          ? "bg-pink-500 text-white"
-                          : "bg-gray-600 text-gray-400"
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-100 text-gray-400"
                     }`}
                   >
                     {index < currentStep ? <CheckCircle className="h-4 w-4" /> : <step.icon className="h-4 w-4" />}
@@ -271,36 +273,37 @@ export default function NewProductPage() {
           </CardContent>
         </Card>
 
-        {/* Form Content */}
-        <Card className="bg-gray-800 border-gray-700">
+        {/* 폼 컨텐츠 */}
+        <Card className="bg-white border border-gray-200 shadow-sm">
           <CardContent className="p-6">
+            {/* 기본 정보 입력 단계 */}
             {currentStep === 0 && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-4">Basic Information</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">기본 정보</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="md:col-span-2">
-                      <Label htmlFor="name" className="text-gray-300">
-                        Product Name *
+                      <Label htmlFor="name" className="text-gray-700">
+                        상품명 *
                       </Label>
                       <Input
                         id="name"
                         value={formData.name}
                         onChange={(e) => handleInputChange("name", e.target.value)}
-                        placeholder="Enter product name"
-                        className="bg-gray-700 border-gray-600 text-white"
+                        placeholder="상품명을 입력하세요"
+                        className="bg-white border-gray-300 text-gray-900"
                       />
                     </div>
 
                     <div>
-                      <Label htmlFor="category" className="text-gray-300">
-                        Category *
+                      <Label htmlFor="category" className="text-gray-700">
+                        카테고리 *
                       </Label>
                       <Select value={formData.category} onValueChange={(value) => handleInputChange("category", value)}>
-                        <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-                          <SelectValue placeholder="Select category" />
+                        <SelectTrigger className="bg-white border-gray-300 text-gray-900">
+                          <SelectValue placeholder="카테고리 선택" />
                         </SelectTrigger>
-                        <SelectContent className="bg-gray-700 border-gray-600">
+                        <SelectContent className="bg-white border-gray-200">
                           {categories.map((category) => (
                             <SelectItem key={category.value} value={category.value}>
                               {category.label}
@@ -312,17 +315,17 @@ export default function NewProductPage() {
 
                     {selectedCategory && (
                       <div>
-                        <Label htmlFor="subcategory" className="text-gray-300">
-                          Subcategory
+                        <Label htmlFor="subcategory" className="text-gray-700">
+                          하위 카테고리
                         </Label>
                         <Select
                           value={formData.subcategory}
                           onValueChange={(value) => handleInputChange("subcategory", value)}
                         >
-                          <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-                            <SelectValue placeholder="Select subcategory" />
+                          <SelectTrigger className="bg-white border-gray-300 text-gray-900">
+                            <SelectValue placeholder="하위 카테고리 선택" />
                           </SelectTrigger>
-                          <SelectContent className="bg-gray-700 border-gray-600">
+                          <SelectContent className="bg-white border-gray-200">
                             {selectedCategory.subcategories.map((sub) => (
                               <SelectItem key={sub} value={sub}>
                                 {sub}
@@ -334,34 +337,34 @@ export default function NewProductPage() {
                     )}
 
                     <div className="md:col-span-2">
-                      <Label htmlFor="shortDescription" className="text-gray-300">
-                        Short Description
+                      <Label htmlFor="shortDescription" className="text-gray-700">
+                        간단 설명
                       </Label>
                       <Input
                         id="shortDescription"
                         value={formData.shortDescription}
                         onChange={(e) => handleInputChange("shortDescription", e.target.value)}
-                        placeholder="Brief description for listings"
-                        className="bg-gray-700 border-gray-600 text-white"
+                        placeholder="목록에 표시될 간단한 설명"
+                        className="bg-white border-gray-300 text-gray-900"
                       />
                     </div>
 
                     <div className="md:col-span-2">
-                      <Label htmlFor="description" className="text-gray-300">
-                        Full Description *
+                      <Label htmlFor="description" className="text-gray-700">
+                        상세 설명 *
                       </Label>
                       <Textarea
                         id="description"
                         value={formData.description}
                         onChange={(e) => handleInputChange("description", e.target.value)}
-                        placeholder="Detailed product description"
+                        placeholder="상품에 대한 자세한 설명"
                         rows={6}
-                        className="bg-gray-700 border-gray-600 text-white"
+                        className="bg-white border-gray-300 text-gray-900"
                       />
                     </div>
 
                     <div className="md:col-span-2">
-                      <Label className="text-gray-300">Product Type</Label>
+                      <Label className="text-gray-700">상품 유형</Label>
                       <RadioGroup
                         value={formData.productType}
                         onValueChange={(value) => handleInputChange("productType", value)}
@@ -369,33 +372,33 @@ export default function NewProductPage() {
                       >
                         <div className="flex items-center space-x-2">
                           <RadioGroupItem value="digital" id="digital" />
-                          <Label htmlFor="digital" className="text-gray-300">
-                            Digital Product
+                          <Label htmlFor="digital" className="text-gray-700">
+                            디지털 상품
                           </Label>
                         </div>
                         <div className="flex items-center space-x-2">
                           <RadioGroupItem value="physical" id="physical" />
-                          <Label htmlFor="physical" className="text-gray-300">
-                            Physical Product
+                          <Label htmlFor="physical" className="text-gray-700">
+                            실물 상품
                           </Label>
                         </div>
                         <div className="flex items-center space-x-2">
                           <RadioGroupItem value="service" id="service" />
-                          <Label htmlFor="service" className="text-gray-300">
-                            Service
+                          <Label htmlFor="service" className="text-gray-700">
+                            서비스
                           </Label>
                         </div>
                       </RadioGroup>
                     </div>
 
                     <div className="md:col-span-2">
-                      <Label className="text-gray-300">Tags</Label>
+                      <Label className="text-gray-700">태그</Label>
                       <div className="flex gap-2 mt-2">
                         <Input
                           value={newTag}
                           onChange={(e) => setNewTag(e.target.value)}
-                          placeholder="Add a tag"
-                          className="bg-gray-700 border-gray-600 text-white"
+                          placeholder="태그 추가"
+                          className="bg-white border-gray-300 text-gray-900"
                           onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
                         />
                         <Button onClick={addTag} size="sm">
@@ -404,9 +407,9 @@ export default function NewProductPage() {
                       </div>
                       <div className="flex flex-wrap gap-2 mt-3">
                         {formData.tags.map((tag) => (
-                          <Badge key={tag} variant="secondary" className="bg-gray-600 text-gray-200">
+                          <Badge key={tag} variant="secondary" className="bg-gray-100 text-gray-700">
                             {tag}
-                            <button onClick={() => removeTag(tag)} className="ml-2 hover:text-red-400">
+                            <button onClick={() => removeTag(tag)} className="ml-2 hover:text-red-500">
                               <X className="h-3 w-3" />
                             </button>
                           </Badge>
@@ -418,16 +421,17 @@ export default function NewProductPage() {
               </div>
             )}
 
+            {/* 미디어 및 파일 업로드 단계 */}
             {currentStep === 1 && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-4">Media & Files</h3>
+                  <h3 className="text-xl font-semibold text-white mb-4">미디어 및 파일</h3>
 
-                  {/* Product Images */}
+                  {/* 상품 이미지 업로드 */}
                   <div className="mb-8">
-                    <Label className="text-gray-300 text-lg">Product Images *</Label>
+                    <Label className="text-gray-300 text-lg">상품 이미지 *</Label>
                     <p className="text-gray-400 text-sm mb-4">
-                      Upload high-quality images of your product. The first image will be used as the main thumbnail.
+                      상품의 고품질 이미지를 업로드하세요. 첫 번째 이미지가 대표 이미지로 사용됩니다.
                     </p>
 
                     <div
@@ -440,8 +444,8 @@ export default function NewProductPage() {
                       onDrop={(e) => handleDrop(e, "images")}
                     >
                       <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                      <p className="text-gray-300 mb-2">Drag and drop images here, or click to browse</p>
-                      <p className="text-gray-500 text-sm">PNG, JPG, GIF up to 10MB each</p>
+                      <p className="text-gray-300 mb-2">이미지를 드래그하여 놓거나 클릭하여 선택하세요</p>
+                      <p className="text-gray-500 text-sm">PNG, JPG, GIF (최대 10MB)</p>
                       <input
                         type="file"
                         multiple
@@ -455,7 +459,7 @@ export default function NewProductPage() {
                         className="mt-4"
                         onClick={() => document.getElementById("image-upload")?.click()}
                       >
-                        Choose Files
+                        파일 선택
                       </Button>
                     </div>
 
@@ -466,7 +470,7 @@ export default function NewProductPage() {
                             <div className="aspect-square bg-gray-700 rounded-lg overflow-hidden">
                               <img
                                 src={URL.createObjectURL(file) || "/placeholder.svg"}
-                                alt={`Product image ${index + 1}`}
+                                alt={`상품 이미지 ${index + 1}`}
                                 className="w-full h-full object-cover"
                               />
                             </div>
@@ -476,18 +480,18 @@ export default function NewProductPage() {
                             >
                               <X className="h-4 w-4" />
                             </button>
-                            {index === 0 && <Badge className="absolute bottom-2 left-2 bg-pink-500">Main</Badge>}
+                            {index === 0 && <Badge className="absolute bottom-2 left-2 bg-pink-500">대표</Badge>}
                           </div>
                         ))}
                       </div>
                     )}
                   </div>
 
-                  {/* Product Files */}
+                  {/* 상품 파일 업로드 */}
                   <div>
-                    <Label className="text-gray-300 text-lg">Product Files</Label>
+                    <Label className="text-gray-300 text-lg">상품 파일</Label>
                     <p className="text-gray-400 text-sm mb-4">
-                      Upload the actual product files that customers will download.
+                      고객이 다운로드할 실제 상품 파일을 업로드하세요.
                     </p>
 
                     <div
@@ -500,8 +504,8 @@ export default function NewProductPage() {
                       onDrop={(e) => handleDrop(e, "files")}
                     >
                       <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                      <p className="text-gray-300 mb-2">Drag and drop files here, or click to browse</p>
-                      <p className="text-gray-500 text-sm">Any file type up to 100MB each</p>
+                      <p className="text-gray-300 mb-2">파일을 드래그하여 놓거나 클릭하여 선택하세요</p>
+                      <p className="text-gray-500 text-sm">모든 파일 형식 (최대 100MB)</p>
                       <input
                         type="file"
                         multiple
@@ -514,7 +518,7 @@ export default function NewProductPage() {
                         className="mt-4"
                         onClick={() => document.getElementById("file-upload")?.click()}
                       >
-                        Choose Files
+                        파일 선택
                       </Button>
                     </div>
 
@@ -544,17 +548,18 @@ export default function NewProductPage() {
               </div>
             )}
 
+            {/* 가격 설정 단계 */}
             {currentStep === 2 && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-4">Pricing</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">가격 설정</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <Label htmlFor="price" className="text-gray-300">
-                        Price *
+                      <Label htmlFor="price" className="text-gray-700">
+                        판매가 *
                       </Label>
                       <div className="relative">
-                        <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <Banknote className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
                         <Input
                           id="price"
                           type="number"
@@ -562,17 +567,17 @@ export default function NewProductPage() {
                           value={formData.price}
                           onChange={(e) => handleInputChange("price", e.target.value)}
                           placeholder="0.00"
-                          className="bg-gray-700 border-gray-600 text-white pl-10"
+                          className="bg-white border-gray-200 text-gray-900 pl-10"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <Label htmlFor="compareAtPrice" className="text-gray-300">
-                        Compare at Price
+                      <Label htmlFor="compareAtPrice" className="text-gray-700">
+                        정상가
                       </Label>
                       <div className="relative">
-                        <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <Banknote className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
                         <Input
                           id="compareAtPrice"
                           type="number"
@@ -580,20 +585,20 @@ export default function NewProductPage() {
                           value={formData.compareAtPrice}
                           onChange={(e) => handleInputChange("compareAtPrice", e.target.value)}
                           placeholder="0.00"
-                          className="bg-gray-700 border-gray-600 text-white pl-10"
+                          className="bg-white border-gray-200 text-gray-900 pl-10"
                         />
                       </div>
-                      <p className="text-gray-400 text-sm mt-1">Show customers the original price</p>
+                      <p className="text-gray-600 text-sm mt-1">고객에게 표시될 원래 가격</p>
                     </div>
                   </div>
 
                   {formData.productType === "physical" && (
                     <div className="mt-8">
-                      <h4 className="text-lg font-medium text-white mb-4">Shipping Information</h4>
+                      <h4 className="text-lg font-medium text-gray-900 mb-4">배송 정보</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                          <Label htmlFor="weight" className="text-gray-300">
-                            Weight (lbs)
+                          <Label htmlFor="weight" className="text-gray-700">
+                            무게 (lbs)
                           </Label>
                           <Input
                             id="weight"
@@ -602,36 +607,36 @@ export default function NewProductPage() {
                             value={formData.weight}
                             onChange={(e) => handleInputChange("weight", e.target.value)}
                             placeholder="0.0"
-                            className="bg-gray-700 border-gray-600 text-white"
+                            className="bg-white border-gray-200 text-gray-900"
                           />
                         </div>
 
                         <div className="md:col-span-1">
-                          <Label className="text-gray-300">Dimensions (inches)</Label>
+                          <Label className="text-gray-700">크기 (inches)</Label>
                           <div className="grid grid-cols-3 gap-2 mt-1">
                             <Input
                               type="number"
                               step="0.1"
                               value={formData.dimensions.length}
                               onChange={(e) => handleDimensionChange("length", e.target.value)}
-                              placeholder="L"
-                              className="bg-gray-700 border-gray-600 text-white"
+                              placeholder="길이"
+                              className="bg-white border-gray-200 text-gray-900"
                             />
                             <Input
                               type="number"
                               step="0.1"
                               value={formData.dimensions.width}
                               onChange={(e) => handleDimensionChange("width", e.target.value)}
-                              placeholder="W"
-                              className="bg-gray-700 border-gray-600 text-white"
+                              placeholder="너비"
+                              className="bg-white border-gray-200 text-gray-900"
                             />
                             <Input
                               type="number"
                               step="0.1"
                               value={formData.dimensions.height}
                               onChange={(e) => handleDimensionChange("height", e.target.value)}
-                              placeholder="H"
-                              className="bg-gray-700 border-gray-600 text-white"
+                              placeholder="높이"
+                              className="bg-white border-gray-200 text-gray-900"
                             />
                           </div>
                         </div>
@@ -642,19 +647,21 @@ export default function NewProductPage() {
               </div>
             )}
 
+            {/* 상품 설정 단계 */}
             {currentStep === 3 && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-4">Product Settings</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">상품 설정</h3>
                   <div className="space-y-6">
                     <div className="flex items-center space-x-2">
                       <Checkbox
                         id="allowRatings"
                         checked={formData.allowRatings}
                         onCheckedChange={(checked) => handleInputChange("allowRatings", checked)}
+                        className="border-gray-300"
                       />
-                      <Label htmlFor="allowRatings" className="text-gray-300">
-                        Allow customer ratings and reviews
+                      <Label htmlFor="allowRatings" className="text-gray-700">
+                        고객 평점 및 리뷰 허용
                       </Label>
                     </div>
 
@@ -664,9 +671,10 @@ export default function NewProductPage() {
                           id="requiresShipping"
                           checked={formData.requiresShipping}
                           onCheckedChange={(checked) => handleInputChange("requiresShipping", checked)}
+                          className="border-gray-300"
                         />
-                        <Label htmlFor="requiresShipping" className="text-gray-300">
-                          This product requires shipping
+                        <Label htmlFor="requiresShipping" className="text-gray-700">
+                          이 상품은 배송이 필요합니다
                         </Label>
                       </div>
                     )}
@@ -675,44 +683,45 @@ export default function NewProductPage() {
               </div>
             )}
 
+            {/* SEO 및 출판 단계 */}
             {currentStep === 4 && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-4">SEO & Publishing</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">SEO 및 출판</h3>
                   <div className="space-y-6">
                     <div>
-                      <Label htmlFor="seoTitle" className="text-gray-300">
-                        SEO Title
+                      <Label htmlFor="seoTitle" className="text-gray-700">
+                        SEO 제목
                       </Label>
                       <Input
                         id="seoTitle"
                         value={formData.seoTitle}
                         onChange={(e) => handleInputChange("seoTitle", e.target.value)}
-                        placeholder="SEO optimized title"
-                        className="bg-gray-700 border-gray-600 text-white"
+                        placeholder="SEO 최적화된 제목"
+                        className="bg-white border-gray-200 text-gray-900"
                       />
                     </div>
 
                     <div>
-                      <Label htmlFor="seoDescription" className="text-gray-300">
-                        SEO Description
+                      <Label htmlFor="seoDescription" className="text-gray-700">
+                        SEO 설명
                       </Label>
                       <Textarea
                         id="seoDescription"
                         value={formData.seoDescription}
                         onChange={(e) => handleInputChange("seoDescription", e.target.value)}
-                        placeholder="SEO meta description"
+                        placeholder="SEO 메타 설명"
                         rows={3}
-                        className="bg-gray-700 border-gray-600 text-white"
+                        className="bg-white border-gray-200 text-gray-900"
                       />
                     </div>
 
                     <div>
-                      <Label htmlFor="customUrl" className="text-gray-300">
-                        Custom URL
+                      <Label htmlFor="customUrl" className="text-gray-700">
+                        사용자 정의 URL
                       </Label>
                       <div className="flex">
-                        <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-600 bg-gray-700 text-gray-400 text-sm">
+                        <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-200 bg-gray-50 text-gray-600 text-sm">
                           yourstore.com/products/
                         </span>
                         <Input
@@ -720,7 +729,7 @@ export default function NewProductPage() {
                           value={formData.customUrl}
                           onChange={(e) => handleInputChange("customUrl", e.target.value)}
                           placeholder="custom-product-url"
-                          className="bg-gray-700 border-gray-600 text-white rounded-l-none"
+                          className="bg-white border-gray-200 text-gray-900 rounded-l-none"
                         />
                       </div>
                     </div>
@@ -730,17 +739,18 @@ export default function NewProductPage() {
                         id="isPublished"
                         checked={formData.isPublished}
                         onCheckedChange={(checked) => handleInputChange("isPublished", checked)}
+                        className="border-gray-300"
                       />
-                      <Label htmlFor="isPublished" className="text-gray-300">
-                        Publish this product immediately
+                      <Label htmlFor="isPublished" className="text-gray-700">
+                        이 상품을 즉시 공개
                       </Label>
                     </div>
 
                     {!formData.isPublished && (
-                      <Alert className="bg-yellow-500/10 border-yellow-500/20">
-                        <AlertCircle className="h-4 w-4 text-yellow-500" />
-                        <AlertDescription className="text-yellow-200">
-                          This product will be saved as a draft and won't be visible to customers until published.
+                      <Alert className="bg-amber-50 border-amber-200">
+                        <AlertCircle className="h-4 w-4 text-amber-500" />
+                        <AlertDescription className="text-amber-800">
+                          이 상품은 임시저장되며 공개되기 전까지 고객에게 보이지 않습니다.
                         </AlertDescription>
                       </Alert>
                     )}
@@ -751,25 +761,25 @@ export default function NewProductPage() {
           </CardContent>
         </Card>
 
-        {/* Navigation */}
+        {/* 네비게이션 버튼 */}
         <div className="flex items-center justify-between">
           <Button variant="outline" onClick={prevStep} disabled={currentStep === 0}>
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Previous
+            이전
           </Button>
 
           <div className="flex gap-2">
             <Button variant="outline" onClick={() => router.push("/seller/products")}>
-              Save as Draft
+              임시저장
             </Button>
 
             {currentStep === steps.length - 1 ? (
               <Button onClick={handleSubmit} disabled={isLoading}>
-                {isLoading ? "Creating..." : "Create Product"}
+                {isLoading ? "생성 중..." : "상품 등록"}
               </Button>
             ) : (
               <Button onClick={nextStep} disabled={!validateStep(currentStep)}>
-                Next
+                다음
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             )}
